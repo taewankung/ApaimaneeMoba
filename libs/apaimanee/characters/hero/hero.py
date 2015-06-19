@@ -15,7 +15,7 @@ class Hero(GameUnit):
                  sensor_mouse, sensor_click,
                  sensor_collition, act_track, act_move,
                  controller,
-                 attack_speed=0.5) :
+                 attack_speed=0.5):
        
         super().__init__(name,
                          controller, 
@@ -48,10 +48,10 @@ class Hero(GameUnit):
             self.level += 1
             self.exp -= self.max_exp
             self.max_exp = [self.level-1]
-    
+
     def regend_mana(self):
         pass
-
+    
     def move_unit(self, target):
         self.track.object = target
         hitPosition = self.mouse.hitPosition
@@ -70,7 +70,7 @@ class Hero(GameUnit):
     def skill_action(self, skill):
         pass
 
-    def cooldown_skill(self,skill):
+    def cooldown_skill(self, skill):
         pass
 
     def set_key(self, key):
