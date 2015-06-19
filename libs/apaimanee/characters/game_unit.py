@@ -28,10 +28,13 @@ class GameUnit:
     def regend_hp(self,hp):
         self.current_hp += hp
 
+    def die(self):
+        self.alive = False
+
     def get_alive(self):
          return alive
     
-    def walk(self):
+    def move_unit(self):
         pass
     
     def attack(self):

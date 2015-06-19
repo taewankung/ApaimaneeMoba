@@ -12,5 +12,8 @@ class Minion(GameUnit):
     def get_gold(self, gold, hero):
         pass
 
-    def walk(self):
+    def move(self):
+        pass
+    
+    def attack(self,enemy):
         pass
