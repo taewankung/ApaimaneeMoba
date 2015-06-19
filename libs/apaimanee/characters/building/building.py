@@ -8,6 +8,5 @@ class Building(GameUnit):
         super().__init__(self,name,max_hp)
         self,building_team = building_team
     
-    def walk(self):
-        print("i'm a builing. i can't walk")
- 
+    def attack(self):
+        pass

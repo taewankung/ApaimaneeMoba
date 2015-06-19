@@ -15,7 +15,7 @@ class Hero(GameUnit):
                  sensor_mouse, sensor_click,
                  sensor_collition, act_track, act_move,
                  controller,
-                 attack_speed=0.5) :
+                 attack_speed=0.5):
        
         super().__init__(name,
                          controller, 
@@ -42,19 +42,16 @@ class Hero(GameUnit):
         self.exp = 0
         self.max_exp = max_exp[self.level-1]
 
-    def increase_exp(self,get_exp):
+    def level_up(self,get_exp):
         self.exp += get_exp
         if self.exp >= exp:
             self.level += 1
             self.exp -= self.max_exp
             self.max_exp = [self.level-1]
 
-    def up_skill(self):
-            pass
-
-
-    
-    def walk(self, target):
+    def regend_mana(self):
+        pass
+    def move_unit(self, target):
         self.track.object = target
         hitPosition = self.mouse.hitPosition
         if self.click.positive:
@@ -66,10 +63,13 @@ class Hero(GameUnit):
             self.cont.deactivate(self.move)
         pass
 
-    def attack(self, Enemy):
+    def attack(self, enemy):
         pass
 
     def skill_action(self, skill):
+        pass
+
+    def cooldown_skill(self, skill):
         pass
 
     def set_key(self, key):
@@ -83,11 +83,6 @@ class Hero(GameUnit):
 
     def die(self):
         self.alive = False
-    
-    def when_die(self):
-            if self.hp == 0:
-                self.die();
-                self.get_gold_die(self.kda)
 
     def get_when_die(self, kda):
         gift=[]
