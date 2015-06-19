@@ -1,7 +1,7 @@
 from bge import logic
 import sys
-sys.path.append('/home/returner/apimanee/libs/apaimanee')
-from characters.game_unit import GameUnit
+
+from libs.apaimanee.characters.game_unit import GameUnit
 
 max_exp = [200, 300, 400, 500, 600, 700, 800, 900,
            1000, 1100, 1200, 1300, 1400, 1500, 1600,
@@ -49,6 +49,11 @@ class Hero(GameUnit):
             self.exp -= self.max_exp
             self.max_exp = [self.level-1]
 
+    def up_skill(self):
+            pass
+
+
+    
     def walk(self, target):
         self.track.object = target
         hitPosition = self.mouse.hitPosition
