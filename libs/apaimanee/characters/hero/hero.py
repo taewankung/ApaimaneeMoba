@@ -1,6 +1,6 @@
 from bge import logic
 import sys
-sys.path.append('/home/returner/apimanee/ApaimaneeMoba/lib')
+sys.path.append('/home/returner/apimanee/libs/apaimanee')
 from characters.game_unit import GameUnit
 
 max_exp = [200, 300, 400, 500, 600, 700, 800, 900,
