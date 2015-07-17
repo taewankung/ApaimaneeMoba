@@ -62,7 +62,6 @@ class Hero(GameUnit):
             self.cont.activate(self.move)
         if self.collition.positive:
             self.cont.deactivate(self.move)
-        pass
 
     def attack(self, enemy):
         pass

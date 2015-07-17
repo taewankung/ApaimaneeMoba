@@ -40,6 +40,9 @@ class GameUnit:
     def attack(self):
         pass
     
+    def get_owner(self):
+        return self.own
+
     def show_status(self):
         print("Name: ", self.name)
         print("hp: ", self.current_hp)
