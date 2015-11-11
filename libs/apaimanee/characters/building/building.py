@@ -10,4 +10,5 @@ class Building(GameUnit):
     
     def attack(self,damaged):
         pass
+    
 

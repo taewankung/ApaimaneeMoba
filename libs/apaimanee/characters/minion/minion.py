@@ -3,24 +3,31 @@ from libs.apaimanee.characters.game_unit import GameUnit
 
 
 class Minion(GameUnit):
-    def __init__(self, name, max_hp,
-                 damaged, speed, attack_speed
+    def __init__(self, name, max_hp
+                 ,damaged, speed, attack_speed
                  ,armor, minion_team,checkpoint
-                 ,move, track, near, col_enemy,controller,command):
+                 ,move, track, near, col_enemy,controller,animation
+                 ,act_message='None'
+                 ,sensor_message='None'):
         super().__init__(name,
-                        controller, 
+                        controller,
                         max_hp,
                         damaged,
                         speed,
                         attack_speed,
-                        armor)
+                        armor,
+                        act_message,
+                        sensor_message
+                        )
         self.mininon_team = minion_team
         self.checkpoint = checkpoint
-        self.move = move;
-        self.track = track;
-        self.near = near;
-        self.col_enemy = col_enemy;
-        self.command = command
+        self.act_message = act_message
+        self.sensor_message = sensor_message
+        self.move = move
+        self.track = track
+        self.near = near
+        self.col_enemy = col_enemy
+        self.animation = animation
         self.list_checkpoint = list(self.checkpoint.keys())
     
     def get_gold(self, gold, hero):
@@ -45,7 +52,7 @@ class Minion(GameUnit):
                 self.cont.deactivate(self.move)
             else:
                 self.cont.activate(self.move)
-                self.cont.activate(self.command)
+                self.cont.activate(self.animation)
         elif self.checkpoint[str(self.own["mempath"])].positive:
             if len(self.list_checkpoint) > self.own["go_to_next_checkpoint"]+1:
                 self.own["mempath"] = self.list_checkpoint[int(self.own["go_to_next_checkpoint"])]
@@ -57,7 +64,7 @@ class Minion(GameUnit):
                 self.cont.deactivate(self.move)
         else:
             self.cont.activate(self.move)
-            self.cont.activate(self.command)
+            self.cont.activate(self.animation)
         self.cont.activate(self.track)
     
     def attack(self, enemy):

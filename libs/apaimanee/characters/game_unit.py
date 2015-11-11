@@ -5,15 +5,20 @@ class GameUnit:
     def __init__(self,
                  name, 
                  controller,
-                 max_hp, # maximum helth for game unit
+		         max_hp, # maximum helth for game unit
                  damaged=0,
                  speed=0,
                  attack_speed=0,
-                 armor = 1
+                 armor = 1,
+                 act_message = 'None',
+		         sensor_message = 'None',
+                 objects='cube'
                  ):
         self.cont = controller
         self.own = self.cont.owner
         self.name = name
+        self.sensor_message = sensor_message
+        self.act_message = act_message
         self.max_hp = max_hp
         self.current_hp = max_hp
         self.damaged = damaged
@@ -21,9 +26,11 @@ class GameUnit:
         self.attack_speed = attack_speed
         self.armor = armor
         self.alive = True
+        self.objects=objects
         
     def reduce_hp(self, damaged):
         self.current_hp -= damaged*((100-armor)/100)
+        self.objects["hp"] = damaged*((100-armor)/100)
 
     def regend_hp(self,hp):
         self.current_hp += hp
@@ -33,10 +40,10 @@ class GameUnit:
 
     def get_alive(self):
          return alive
-    
+    #///////////////////// Interface ////////////////////////
     def move_unit(self):
         pass
-    
+    #//////////////////// Interface /////////////////////////
     def attack(self):
         pass
     

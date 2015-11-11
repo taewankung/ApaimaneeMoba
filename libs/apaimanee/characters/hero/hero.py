@@ -1,5 +1,9 @@
 from bge import logic
+from bge import types
+import bpy 
+ 
 import sys
+import time
 
 from libs.apaimanee.characters.game_unit import GameUnit
 
@@ -7,15 +11,15 @@ max_exp = [200, 300, 400, 500, 600, 700, 800, 900,
            1000, 1100, 1200, 1300, 1400, 1500, 1600,
            1700, 1800] 
 
-
 class Hero(GameUnit):
-
+    
     def __init__(self, name, max_hp,armor, max_mana,
-                 damaged, hero_team,speed, 
-                 sensor_mouse, sensor_click,
-                 sensor_collition, act_track, act_move,
+                 damaged, hero_team,speed,
                  controller,
-                 attack_speed=0.5):
+                 attack_speed=0.5,
+                 act_message='None',
+                 sensor_message='None',animation='',objects=''):
+            #self.delay += self.attack_speed; 
        
         super().__init__(name,
                          controller, 
@@ -23,13 +27,14 @@ class Hero(GameUnit):
                          damaged,
                          speed,
                          attack_speed,
-                         armor)
-
-        self.mouse = sensor_mouse
-        self.track = act_track
-        self.click = sensor_click
-        self.collition = sensor_collition
-        self.move = act_move
+                         armor,
+                         act_message,
+                         sensor_message,objects)
+        self.mouse = self.cont.sensors["Mouse"]
+        self.track = self.cont.actuators["TrackTarget"]
+        self.click = self.cont.sensors["ClickR"]
+        self.move = self.cont.actuators["Move"]
+        self.collition = self.cont.sensors["Collision"]
         self.mana = max_mana
         self.max_mana = max_mana
         self.hero_team = hero_team
@@ -41,6 +46,8 @@ class Hero(GameUnit):
         self.kda = self.kill+self.assist/((self.die+1))
         self.exp = 0
         self.max_exp = max_exp[self.level-1]
+        self.animation = animation
+        self.state = self.own["states"]
 
     def level_up(self,get_exp):
         self.exp += get_exp
@@ -56,15 +63,35 @@ class Hero(GameUnit):
         self.track.object = target
         hitPosition = self.mouse.hitPosition
         if self.click.positive:
+           # self.own.sendMessage("move","","metarig")
             target.worldPosition.y = hitPosition.y
             target.worldPosition.x = hitPosition.x
             self.cont.activate(self.track)
             self.cont.activate(self.move)
+            if self.state=='stand_by':
+                self.objects["states"] = "move"
         if self.collition.positive:
             self.cont.deactivate(self.move)
+            self.objects["states"] = "stand_by"
+        elif self.state=='move':
+            self.own.sendMessage("move","",str(self.animation))
+           # print("move")
+            #self.state="stand_by"
 
-    def attack(self, enemy):
-        pass
+    def attack(self, target):
+        hitObject = self.mouse.hitObject
+        if str(hitObject == "tower") and self.click.positive :
+            target["states"]=str(hitObject)
+        if self.cont.sensors["team2"].positive and target["states"] == "tower":
+            self.own.sendMessage('attack',"",str(self.animation))
+            #self.own.sendMessage('attack',"",target["states"])
+            self.objects["states"]='attack'
+            if self.objects.sensors["Message"].positive:
+                self.own.sendMessage('attack','',target["states"])
+            #print(self.objects["test"])
+        if not self.cont.sensors["team2"].positive:
+            self.objects["states"]='move'
+            self.objects["test"]=0;
 
     def skill_action(self, skill):
         pass
