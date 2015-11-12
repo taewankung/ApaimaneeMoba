@@ -12,7 +12,8 @@ class GameUnit:
                  armor = 1,
                  act_message = 'None',
 		         sensor_message = 'None',
-                 objects='cube'
+                 objects='',
+                 enemy_list = []
                  ):
         self.cont = controller
         self.own = self.cont.owner
@@ -27,6 +28,7 @@ class GameUnit:
         self.armor = armor
         self.alive = True
         self.objects=objects
+        self.enemy_list = enemy_list
         
     def reduce_hp(self, damaged):
         self.current_hp -= damaged*((100-armor)/100)

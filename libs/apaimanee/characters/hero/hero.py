@@ -1,7 +1,6 @@
 from bge import logic
 from bge import types
-import bpy 
- 
+
 import sys
 import time
 
@@ -18,7 +17,10 @@ class Hero(GameUnit):
                  controller,
                  attack_speed=0.5,
                  act_message='None',
-                 sensor_message='None',animation='',objects=''):
+                 sensor_message='None',
+                 animation='',
+                 objects='',
+                 enemy_list=[]):
             #self.delay += self.attack_speed; 
        
         super().__init__(name,
@@ -29,7 +31,7 @@ class Hero(GameUnit):
                          attack_speed,
                          armor,
                          act_message,
-                         sensor_message,objects)
+                         sensor_message,objects,enemy_list)
         self.mouse = self.cont.sensors["Mouse"]
         self.track = self.cont.actuators["TrackTarget"]
         self.click = self.cont.sensors["ClickR"]
@@ -60,35 +62,40 @@ class Hero(GameUnit):
         pass
     
     def move_unit(self, target):
-        self.track.object = target
+        scene = logic.getCurrentScene()
         hitPosition = self.mouse.hitPosition
-        if self.click.positive:
-           # self.own.sendMessage("move","","metarig")
-            target.worldPosition.y = hitPosition.y
-            target.worldPosition.x = hitPosition.x
+        hit_object = self.mouse.hitObject
+        default_target = scene.objects["Target"]
+        #print("in hero.py line 65:"+str(self.mouse.hitObject))
+        if self.click.positive and (self.enemy_list.count(str(hit_object)) == 0):
+            self.track.object = default_target
+            default_target.worldPosition.y = hitPosition.y
+            default_target.worldPosition.x = hitPosition.x
             self.cont.activate(self.track)
             self.cont.activate(self.move)
             if self.state=='stand_by':
                 self.objects["states"] = "move"
+        elif self.click.positive and (self.enemy_list.count(str(hit_object))  > 0):
+            self.track.object = hit_object
+            self.cont.activate(self.track)
+            self.cont.activate(self.move)
         if self.collition.positive:
             self.cont.deactivate(self.move)
             self.objects["states"] = "stand_by"
         elif self.state=='move':
             self.own.sendMessage("move","",str(self.animation))
-           # print("move")
-            #self.state="stand_by"
 
     def attack(self, target):
         hitObject = self.mouse.hitObject
-        if str(hitObject == "tower") and self.click.positive :
+        #print(enemy_list.count(str(hitObject)))
+        if self.enemy_list.count(str(hitObject)) > 0 and self.click.positive :
             target["states"]=str(hitObject)
-        if self.cont.sensors["team2"].positive and target["states"] == "tower":
+        if self.cont.sensors["team2"].positive and self.enemy_list.count(target["states"])>0:
             self.own.sendMessage('attack',"",str(self.animation))
             #self.own.sendMessage('attack',"",target["states"])
             self.objects["states"]='attack'
             if self.objects.sensors["Message"].positive:
                 self.own.sendMessage('attack','',target["states"])
-            #print(self.objects["test"])
         if not self.cont.sensors["team2"].positive:
             self.objects["states"]='move'
             self.objects["test"]=0;
