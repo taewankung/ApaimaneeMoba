@@ -41,19 +41,7 @@ class Hero(GameUnit):
         self.click = self.cont.sensors["ClickR"]
         self.move = self.cont.actuators["Move"]
         self.collition = self.cont.sensors["Collision"]
-        #self.mana = self.unit["max_mana"]
-        #self.max_mana = max_mana
-        #self.hero_team = hero_team
-        #self.level = 1
-        #self.gold = 650
-        #self.kill = 0
-        #self.die = 0
-        #self.assist = 0
-        #self.kda = self.kill+self.assist/((self.die+1))
-        #self.exp = 0
-        #self.max_exp = max_exp[self.level-1]
         self.animation = animation
-        #self.state = self.own["states"]
     
     def getName(self):
         return self.name
