@@ -1,12 +1,13 @@
 from bge import logic
-from ApaimaneeMoba.lib.characters.GameUnit import GameUnit
-
+from libs.apaimanee.characters.game_unit import GameUnit
 
 class Building(GameUnit):
     
-    def __init__(self, name, max__hp,armor, building_team):
-        super().__init__(self,name,max_hp)
-        self,building_team = building_team
+    def __init__(self, controller,unit,enemy_list):
+        super().__init__(controller,
+                         unit,
+                         enemy_list)
+        #self,building_team = building_team
     
     def attack(self,damaged):
         pass
