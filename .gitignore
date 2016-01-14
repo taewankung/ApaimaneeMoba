@@ -2,3 +2,5 @@
 *.zip
 *.blend*
 *.swp
+*.pyc
+__pycache__
