@@ -4,7 +4,7 @@ from bge import types
 import sys
 import time
 
-from libs.apaimanee.characters.game_unit import GameUnit
+from libs.apaimanee.characters.GameUnit import GameUnit
 
 max_exp = [200, 300, 400, 500, 600, 700, 800, 900,
            1000, 1100, 1200, 1300, 1400, 1500, 1600,
@@ -95,6 +95,12 @@ class Hero(GameUnit):
         if not self.cont.sensors["team2"].positive:
             self.unit["states"]='move'
             #self.unit["test"]=0;
+    
+    def damaged(self):
+        if self.cont.sensors["damaged_mes"].positive :
+            if self.unit["hp"] >= 0:
+                self.unit["hp"]=self.unit["hp"]-int(self.cont.sensors["damaged_mes"].bodies[0])
+
 
     def skill_action(self, skill):
         pass

@@ -1,5 +1,5 @@
 from bge import logic
-from libs.apaimanee.characters.game_unit import GameUnit
+from libs.apaimanee.characters.GameUnit import GameUnit
 
 
 class Minion(GameUnit):
