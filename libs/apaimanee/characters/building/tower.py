@@ -6,8 +6,8 @@ class Tower(Building):
     def __init__(self,
                  controller,
                  unit,
-                 spawn_bullet,
-                 enemy_list):
+                 spawn_bullet="",
+                 enemy_list=[]):
         
         super().__init__(
                         controller,

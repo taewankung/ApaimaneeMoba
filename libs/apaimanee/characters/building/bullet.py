@@ -14,8 +14,8 @@ class Bullet:
         if self.cont.sensors["Collision"].positive :
             hit_obj =  self.cont.sensors["Collision"].hitObject
             print(hit_obj)
-            #if  message.positive :
-             #   self.unit.sendMessage("reduce_hp",str(damage),hit_obj)
+            if  message.positive :
+                self.unit.sendMessage("reduce_hp",str(damage),str(hit_obj))
             self.unit.endObject()
         elif self.cont.sensors["Collision_ground"].positive :
             self.unit.endObjects()
