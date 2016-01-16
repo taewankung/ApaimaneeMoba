@@ -1,0 +1,27 @@
+#!/usr/bin/python3
+'''
+Created on Dec 2, 2012
+
+@author: superizer
+'''
+
+from apmn import application
+from apmn import config
+
+import sys
+import os
+import logging.config
+
+if __name__ == '__main__':
+    app_config = config.Configuration()
+   # initial logging
+    #directory = config.settings.get('apmn.log_dir')
+    #if not os.path.exists(directory):
+        #os.makedirs(directory)
+
+    #logging.config.fileConfig(sys.argv[1])
+    #logger = logging.getLogger()
+    #logger.debug("welcome_message")
+
+    app = application.Application(app_config)
+    app.start()
