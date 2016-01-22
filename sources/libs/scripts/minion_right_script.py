@@ -50,6 +50,6 @@ def move():
         minion.set_team()
         minion.move_unit()
         minion.damaged()
-        minion.die_get_gold()
+        minion.die_and_gold()
        #minion.attack()
 #cont.activate(command)

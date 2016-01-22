@@ -11,13 +11,17 @@ class Bullet:
     def attack(self,damage):
         self.cont.activate(self.cont.actuators["Motion"])
         message = self.cont.sensors["Message"]
+
         collision =  self.cont.sensors["Collision"]
         if collision.positive :
             #print(collision.hitObject)
             #print(hit_obj)
             if  message.positive :
                 if "hp" in collision.hitObject:
-                    collision.hitObject["hp"] = collision.hitObject["hp"]-damage
+                    self.unit.sendMessage("attack",str(collision.hitObject),str(collision.hitObject))
+                    self.unit.sendMessage("attack_unitID",str(id(collision.hitObject)),str(collision.hitObject))
+                    print(collision.hitObject)
+                    #collision.hitObject["hp"] = collision.hitObject["hp"]-damage
                 #print(message.bodies[0])
 #                self.unit.sendMessage("reduce_hp",str(damage),str(collision.hitObject))
             self.unit.endObject()

@@ -50,6 +50,7 @@ def move():
         minion.set_team()
         minion.move_unit()
         minion.damaged()
-        minion.die_get_gold()
+        if own["hp"]<=0:
+            minion.die_and_gold()
        #minion.attack()
 #cont.activate(command)

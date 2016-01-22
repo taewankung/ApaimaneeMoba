@@ -96,10 +96,9 @@ class Minion(GameUnit):
                     self.unit.sendMessage("attack",self.unit.name,str(enemy))
                     self.unit.sendMessage("attack_unitID",str(id(enemy)),str(enemy))
      
-    def die_get_gold(self):
+    def die_and_gold(self):
         if self.cont.sensors["Message"].positive :
             enemy = self.cont.sensors["Message"].bodies[0]            
-            if self.unit["hp"] <=0:
-                self.SendMessage("reward","90",enemy)
-                self.unit.endObject()
-                pass
+            self.unit.sendMessage("reward","90",enemy)
+            self.unit.endObject()
+            pass

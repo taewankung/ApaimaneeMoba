@@ -67,6 +67,7 @@ class GameUnit:
         obj = None
         if self.cont.sensors["Message"].positive and self.cont.sensors["id_message"].positive:
             enemy = self.cont.sensors["Message"].bodies[0]
+            print(enemy)
             id_mine = self.cont.sensors["id_message"].bodies[0]
             if self.cont.sensors["id_message"].bodies[0] == str(id(self.unit)):
                 if enemy in scene.objects:
