@@ -1,0 +1,6 @@
+run 150-170
+atk 70-90
+stand 40-60
+skill1 10-36
+dead 10-140
+Ultimate
