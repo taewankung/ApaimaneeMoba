@@ -27,10 +27,11 @@ class Tower(Building):
             dist =0
             obj = None
             for character in self.cont.sensors["Near"].hitObjectList:
-                if character.getDistanceTo(self.unit) < dist or dist == 0:
-                    dist = character.getDistanceTo(self.unit)
-                    obj = character
-                    self.unit.sendMessage("attack",str(obj),str(self.spawn_bullet))
-                    #print(obj)
-                    return obj
+                if character["team"] != self.unit["team"]:
+                    if character.getDistanceTo(self.unit) < dist or dist == 0:
+                        dist = character.getDistanceTo(self.unit)
+                        obj = character
+                        self.unit.sendMessage("attack",str(obj),str(self.spawn_bullet))
+                        #print(obj)
+                        return obj
            # self.unit.sendMessage("attack",str(damage),self.cont.sen)

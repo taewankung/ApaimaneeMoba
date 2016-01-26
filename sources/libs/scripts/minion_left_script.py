@@ -9,25 +9,25 @@ def move():
     animation = cont.actuators["animation"]
 
     minion = None
-    if "team2" in own:
-        minion = Minion(cont,
-                        animation,
-                        own,
-                        own["team2"],
-                        "Armature_creep_left_team2",
-                        "creep_left_action_team2"
-                        )
-    else:
-        minion = Minion(cont,
-                        animation,
-                        own,
-                        own["team1"],
-                        "Armature_creep_left_team1",
-                        "creep_left_action_team1"
-                        )
+    if "team" in own:
+        if own["team"] == "team2":
+            minion = Minion(cont,
+                            animation,
+                            own,
+                            "Armature_creep_left_team2",
+                            "creep_left_action_team2"
+                            )
+        elif own["team"] == "team1":
+            minion = Minion(cont,
+                            animation,
+                            own,
+                            "Armature_creep_left_team1",
+                            "creep_left_action_team1"
+                            )
     if minion != None :
+        
+        #print("team: ", own["team"], " id: ", minion.id)
         minion.set_first_path("checkpoint_left1")
-        minion.set_team()
         minion.move_unit()
         minion.damaged()
         if own["hp"] <= 0:

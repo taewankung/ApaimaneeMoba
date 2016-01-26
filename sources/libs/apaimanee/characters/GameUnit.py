@@ -1,5 +1,5 @@
 from bge import logic
-
+import uuid
 
 class GameUnit:
     def __init__(self,
@@ -15,24 +15,19 @@ class GameUnit:
                  unit='',
                  enemy_list = []
                  ):
+
+        if 'id' in controller.owner:
+            if len(controller.owner['id']) == 0:
+                self.id = str(uuid.uuid4())
+                controller.owner['id'] = self.id
+            else:
+                self.id = controller.owner['id']
+
         self.cont = controller
-        #self.sensor_message = sensor_message
-        #self.act_message = act_message
         self.unit=unit
         self.enemy_list = enemy_list
-#        self.uid = 
-#        self.own = self.cont.owner
-#        self.name = name
-#        self.max_hp = max_hp
-#        self.current_hp = max_hp
-#        self.damaged = damaged
-#        self.speed = speed
-#        self.attack_speed = attack_speed
-#        self.armor = armor
-#        self.alive = True
        
     def reduce_hp(self, damaged):
-#        self.current_hp -= damaged*((100-armor)/100)
         self.unit["hp"] = damaged*((100-self.unit["armor"])/100)
 
     def regend_hp(self,hp):
@@ -69,11 +64,11 @@ class GameUnit:
             enemy = self.cont.sensors["Message"].bodies[0]
             #print(enemy)#enemy attack
             id_mine = self.cont.sensors["id_message"].bodies[0]
-            if self.cont.sensors["id_message"].bodies[0] == str(id(self.unit)):
+            if self.cont.sensors["id_message"].bodies[0] == self.unit["id"]:
                 if enemy in scene.objects:
                     obj = scene.objects[enemy]#
-                if str(id(self.unit))== id_mine:
-                    print("yes")
+                if self.unit["id"] == id_mine:
+                    #print("yes")
                     if "hp" in self.unit and "hp" in obj:
                         if self.unit["hp"] > 0:
                             self.unit["hp"] = self.unit["hp"]-float(obj["dmg"])

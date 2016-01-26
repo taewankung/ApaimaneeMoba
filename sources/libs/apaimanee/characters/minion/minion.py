@@ -8,7 +8,6 @@ class Minion(GameUnit):
                  controller,
                  animation,
                  unit,
-                 team_enemy,
                  skeleton_name,
                  creep_action,
                  enemy_list=[]):
@@ -18,7 +17,6 @@ class Minion(GameUnit):
                         enemy_list,
                         )
         #self.checkpoint = checkpoint
-        self.team_enemy =team_enemy
         self.track = self.cont.actuators["track"]
         self.animation = self.cont.actuators["animation"]
         self.near = self.cont.sensors["Near"]
@@ -28,16 +26,6 @@ class Minion(GameUnit):
         self.scene = logic.getCurrentScene()        
         self.skeleton_name = skeleton_name
         self.creep_action = creep_action
-
-    def get_gold(self, gold, hero):
-        pass
-    def set_team(self):
-        if self.team_enemy == "team2":
-#            self.col_enemy.propName = "team2"
-            self.near.propName = "team2"
-        elif self.team_enemy == "team1":
-#            self.col_enemy.propName = "team1"
-            self.near.propName = "team1"
     
     def set_first_path(self,first_path):
         if self.unit["init"] == 0 :
@@ -55,27 +43,29 @@ class Minion(GameUnit):
             hit_objs = self.near.hitObjectList
             dist = 0
             obj = None
+            count = 0
             for item in hit_objs:
-                if item.getDistanceTo(self.unit) < dist or dist ==0:
-                    dist = item.getDistanceTo(self.unit)
-                    obj = item
-                    if obj.getDistanceTo(self.unit)>0 and obj.getDistanceTo(self.unit)<2:
-                        self.move.dLoc=[0,-0.2,0]
-                        self.cont.activate(self.move)
-                    if obj.getDistanceTo(self.unit)>0 and obj.getDistanceTo(self.unit)<10:
-                        self.cont.deactivate(self.move)
-                        self.attack(obj)
+                if "team" in item:
+                    if item["team"] != self.unit["team"]:
+                        if item.getDistanceTo(self.unit) < dist or dist ==0:
+                            dist = item.getDistanceTo(self.unit)
+                            obj = item
+                            self.track.object = obj
+                            self.cont.activate(self.move)
+                            self.cont.activate(self.track)
+                            self.unit["states"]="move"
 
-            self.track.object = obj
-            self.cont.activate(self.track)
+                            if self.col_enemy.positive:
+                                self.cont.deactivate(self.move)
+                                self.attack(obj)
+                                self.unit["states"]="attack"
+                    if item["team"] == self.unit["team"]:
+                        count = count+1
+                    if count == len(hit_objs):
+                        self.unit["states"]="move"
         
-        #if self.col_enemy.positive :
-            #self.move.dLoc =[1,-1,0]
-            #self.cont.deactivate(self.move)
-            #self.attack()
-            #print("attack")
-        else:
-            #self.cont.deactivate(self.attack_act)
+        if self.unit["states"]=="move":
+            self.cont.activate(self.track)
             self.cont.activate(self.move)
             for bone in self.unit.children:    
                 if bone.name == self.skeleton_name:
@@ -94,7 +84,7 @@ class Minion(GameUnit):
                 if math.fabs(bone.getActionFrame()-117)< 99e-2 :
                     bone.stopAction()
                     self.unit.sendMessage("attack",self.unit.name,str(enemy))
-                    self.unit.sendMessage("attack_unitID",str(id(enemy)),str(enemy))
+                    self.unit.sendMessage("attack_unitID",enemy["id"],str(enemy))
      
     def die_and_gold(self):
         if self.cont.sensors["Message"].positive:

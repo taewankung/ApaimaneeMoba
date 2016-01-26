@@ -1,8 +1,8 @@
 from bge import logic
 from bge import types
-
-import sys
-import time
+import math
+#import sys
+#import time
 
 from libs.apaimanee.characters.GameUnit import GameUnit
 
@@ -19,7 +19,8 @@ class Hero(GameUnit):
                  #attack_speed=0.5,
                  #act_message='None',
                  #sensor_message='None',
-                 animation='',
+                 bone_name='',
+                 bone_action='',
                  unit='',
                  enemy_list=[]):
             #self.delay += self.attack_speed; 
@@ -41,10 +42,11 @@ class Hero(GameUnit):
         self.click = self.cont.sensors["ClickR"]
         self.move = self.cont.actuators["Move"]
         self.collition = self.cont.sensors["Collision"]
-        self.animation = animation
+        self.bone_name = bone_name
+        self.bone_action = bone_action
     
     def getName(self):
-        return self.name
+        return self.unit["unit_name"]
 
     def level_up(self,get_exp):
         self.unit["exp"] += get_exp
@@ -56,7 +58,7 @@ class Hero(GameUnit):
     def regend_mana(self):
         pass
     
-    def move_unit(self, target):
+    def move_unit(self, target,start_frame,end_frame,move_speed):
         scene = logic.getCurrentScene()
         hitPosition = self.mouse.hitPosition
         hit_object = self.mouse.hitObject
@@ -78,31 +80,53 @@ class Hero(GameUnit):
             self.cont.deactivate(self.move)
             self.unit["states"] = "stand_by"
         elif self.unit["states"]=='move':
-            self.unit.sendMessage("move","",str(self.animation))
+            #self.unit.sendMessage("move","",str(self.animation))
+            for bone in self.unit.children:
+                if bone.name == self.bone_name:
+                    bone.playAction(self.bone_action,
+                                    start_frame,
+                                    end_frame,
+                                    play_mode= logic.KX_ACTION_MODE_PLAY,
+                                    speed=move_speed)
 
-    def attack(self, target):
+    def attack(self, target,start_frame,end_frame,attack_speed):
         hitObject = self.mouse.hitObject
         #print(enemy_list.count(str(hitObject)))
         if self.enemy_list.count(str(hitObject)) > 0 and self.click.positive :
-            target["states"]=str(hitObject)
-            target["id_obj_clicked"]=str(id(hitObject))
+            target["states"] =str(hitObject)
+            target["id_obj_clicked"] =hitObject["id"]
 
-        if self.cont.sensors["team2"].positive and self.enemy_list.count(target["states"])>0:
-            #print(self.enemy_list)
-            self.unit.sendMessage('attack',"",str(self.animation))
-            #self.unit.sendMessage('attack',"",target["states"])
+        if self.cont.sensors["team"].positive and self.cont.sensors["team"].hitObject["team"]!=self.unit["team"]:
+            for bone in self.unit.children:
+                if bone.name == self.bone_name:
+                    bone.playAction(self.bone_action,
+                                    start_frame,
+                                    end_frame,
+                                    play_mode = logic.KX_ACTION_MODE_PLAY,
+                                    speed = attack_speed
+                                   )
             self.unit["states"]='attack'
-            if self.unit.sensors["Message"].positive:
+            #if self.unit.sensors["Message"].positive:
+            if math.fabs(bone.getActionFrame()-end_frame) < 99e-2:
+                bone.stopAction()
                 self.unit.sendMessage('attack',str(self.unit.name),target["states"])
                 self.unit.sendMessage('attack_unitID',target["id_obj_clicked"],target["states"])
-        if not self.cont.sensors["team2"].positive:
+        if not self.cont.sensors["team"].positive:
             self.unit["states"]='move'
 
-    def skill_action(self, skill):
-        pass
+#    def skill1(self, start_frame, end_frame,damage=0,level=0,magic=0)
+#        pass
+    
+#    def skill2(self, start_frame, end_frame,damage=0,level=0,magic=0):
+#        pass
 
-    def cooldown_skill(self, skill):
-        pass
+#    def skill3(self, start_frame, end_frame,):
+#        pass
+    
+#    def skill_ultimate(self, start_frame,end_frame):
+#        pass
+
+#    def do_skill(self, skill_id, 
 
     def set_key(self, key):
         pass

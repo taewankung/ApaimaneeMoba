@@ -19,11 +19,8 @@ class Bullet:
             if  message.positive :
                 if "hp" in collision.hitObject:
                     self.unit.sendMessage("attack","tower_model",str(collision.hitObject))
-                    self.unit.sendMessage("attack_unitID",str(id(collision.hitObject)),str(collision.hitObject))
+                    self.unit.sendMessage("attack_unitID",collision.hitObject["id"],str(collision.hitObject))
                     print(collision.hitObject)
-                    #collision.hitObject["hp"] = collision.hitObject["hp"]-damage
-                #print(message.bodies[0])
-#                self.unit.sendMessage("reduce_hp",str(damage),str(collision.hitObject))
             self.unit.endObject()
         if self.cont.sensors["Collision_ground"].positive :
             self.unit.endObject()
