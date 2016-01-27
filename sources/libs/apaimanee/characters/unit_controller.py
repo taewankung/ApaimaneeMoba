@@ -1,12 +1,12 @@
-from bge import logic
+import bge
 import uuid
 
-class GameUnit:
+class UnitController:
     def __init__(self
                  ):
         self.id = str(uuid.uuid4())
-        self.controller = logic.getCurrentController()
-        self.owner = controller.owner
+        self.controller = bge.logic.getCurrentController()
+        self.owner = self.controller.owner
 
        
     def reduce_hp(self, damaged):
