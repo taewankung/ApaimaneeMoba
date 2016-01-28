@@ -1,0 +1,21 @@
+from bge import logic
+from libs.apaimanee.characters.SpawnUnit import SpawnUnit
+
+def run():
+    scene = logic.getCurrentScene()
+    #unit = scene.objects["Armature_creep"]
+    cont = logic.getCurrentController()
+    spawner = cont.owner
+    obj = scene.objectsInactive["box_minion"]
+    #obj['mempath'] = 'chekpoint_central1'
+    spawn_unit = SpawnUnit(spawner, obj)
+
+    spawn_unit.spawn(10)
+
+    minion = spawn_unit.last_spawn_object()
+    if minion:
+        minion["team"] = spawner['team']
+        minion["direction"] =spawner['direction']
+
+    
+

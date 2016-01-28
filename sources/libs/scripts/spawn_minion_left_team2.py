@@ -6,5 +6,8 @@ def run():
     cont = logic.getCurrentController()
     spawner = cont.owner
     obj = scene.objectsInactive["box_creep_left_team2"]
+    obj['team'] = 'team2'
+    obj['direction'] = 'left'
+
     spawn_unit = SpawnUnit(spawner,obj)
     spawn_unit.spawn(10)
