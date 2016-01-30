@@ -71,7 +71,7 @@ class Minion(GameObject):
                                      play_mode = bge.logic.KX_ACTION_MODE_PLAY,
                                      speed=1)
     
-    def attack(self,enemy):
+    def attack(self, enemy):
         if self["states"]=="attack":
             for bone in self.children:
                 if bone.name == self.skeleton_name:
@@ -79,7 +79,8 @@ class Minion(GameObject):
                                               90,117.0000000000000000000000000000,
                                               play_mode = bge.logic.KX_ACTION_MODE_PLAY,
                                               speed=1)
-                    if bone.getActionFrame()-117>=117:
+                    print(bone.getActionFrame())
+                    if math.fabs(bone.getActionFrame()-117 ) == 99e-2:
                         print("ss")
                         bone.stopAction()
                         self.sendMessage("attack",self.name,str(enemy))
