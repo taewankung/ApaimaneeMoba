@@ -10,12 +10,13 @@ class SpawnUnit:
         self.cont = self.spawner.controllers["Python"]
 
     def spawn(self,time):
-        spawn_act = self.cont.actuators["spawn"]
         #print("spawn")
         if math.fabs(self.spawner["time"]-(time+0.9)) < 9e-1:
-            spawn_act.object = self.unit
-            self.cont.activate(spawn_act) 
-            self.spawner["time"] = 0e-9
+            for spawn_act in self.cont.actuators: 
+                if spawn_act:
+                    spawn_act.object = self.unit
+                    self.cont.activate(spawn_act)
+            self.spawner["time"] = 0
             
     def reset(self,time):
         if math.fabs(self.spawner["time"]-(time+0.9)) < 9e-1:
@@ -23,4 +24,5 @@ class SpawnUnit:
         pass
     
     def last_spawn_object(self):
-        return self.cont.actuators["spawn"].objectLastCreated
+        results = [s.objectLastCreated for s in self.cont.actuators]
+        return results

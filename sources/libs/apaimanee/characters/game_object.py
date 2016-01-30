@@ -42,7 +42,7 @@ class GameObject(bge.types.KX_GameObject):
         obj = None
         if self.controller.sensors["Message"].positive and self.controller.sensors["id_message"].positive:
             enemy = self.controller.sensors["Message"].bodies[0]
-            #print(enemy)#enemy attack
+            print(enemy)#enemy attack
             id_mine = self.controller.sensors["id_message"].bodies[0]
             if self.controller.sensors["id_message"].bodies[0] == self["id"]:
                 if enemy in scene.objects:

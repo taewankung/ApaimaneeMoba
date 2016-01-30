@@ -1,12 +1,9 @@
 from bge import logic
 from libs.apaimanee.characters.building.tower import Tower
 from libs.apaimanee.characters.building.SpawnBullet import SpawnBullet
-from libs.apaimanee.characters.hero.hero import Hero
+#from libs.apaimanee.characters.hero.hero import Hero
 
-
-
-
-def tower_controller(unit, spawner,scene,enemy_list ):
+def tower_controller(unit, spawner,scene):
         if unit in scene.objects:
             if spawner in scene.objects:
                 unit_spawn_bullet = scene.objects[spawner]
@@ -16,7 +13,7 @@ def tower_controller(unit, spawner,scene,enemy_list ):
                                            2)
                 tower_unit = scene.objects[unit]
                 cont_tower = tower_unit.controllers["Python"]
-                tower = Tower(cont_tower,tower_unit,unit_spawn_bullet,enemy_list)
+                tower = Tower(cont_tower,tower_unit,unit_spawn_bullet)
                 tower.damaged()
                 tower.attack()
                 if tower_unit["hp"] == 0:
@@ -50,18 +47,6 @@ def tower_controller_run():
                 }
     scene = logic.getCurrentScene()
     cont = logic.getCurrentController()
-    enemy_list = ['']
 
     for tower_position in spawn_bullets.keys():
-        tower_controller(tower_position, spawn_bullets[tower_position],scene,enemy_list )
-
-#if "tower_mid_mid" in scene.objects:
-#    if "spawn_bullet_mid_mid" in scene.objects:
-#        spawn_bullet = scene.objects["spawn_bullet_mid_mid"]
-#        tower_unit = scene.objects["tower_mid_mid"]
-#        cont_tower = tower_unit.controllers["Python"]    
-#        tower = Tower(cont_tower,tower_unit,spawn_bullet,enermy_list)
-#        tower.damaged()
-#        tower.attack(10)
-#        if tower_unit["hp"] == 0:
-#            tower.destroyed()            
+        tower_controller(tower_position, spawn_bullets[tower_position],scene)

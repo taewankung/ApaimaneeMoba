@@ -12,10 +12,8 @@ def run():
 
     spawn_unit.spawn(10)
 
-    minion = spawn_unit.last_spawn_object()
-    if minion:
-        minion["team"] = spawner['team']
-        minion["direction"] =spawner['direction']
-
-    
-
+    minions = spawn_unit.last_spawn_object()
+    for minion in minions:
+        if minion:
+            minion["team"] = spawner['team']
+            minion["direction"] =spawner['direction']

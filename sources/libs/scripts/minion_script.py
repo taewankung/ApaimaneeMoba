@@ -7,8 +7,8 @@ from libs.apaimanee.characters.minion.minion import Minion
 def initial(cont):
 
     owner = cont.owner
-    skeleton_name = "Armature_creep_{}_{}".format(owner['direction'], owner['team'])
-    creep_action = "creep_{}_action_{}".format(owner['direction'], owner['team'])
+    skeleton_name = "Armature_creep_{}".format(owner['team'])
+    creep_action = "creep_action_{}".format(owner['team'])
     multated_obj = Minion(owner,
                         skeleton_name=skeleton_name,
                         creep_action=creep_action)
@@ -20,8 +20,8 @@ def move():
         initial(cont)
 
     owner = cont.owner
-   
-    print(id(owner), owner['direction']) 
+#    print(owner.id) 
+#    print(id(owner), owner['direction']) 
     owner.set_first_path("checkpoint1_{}_{}".format(owner["team"], owner['direction']))
        
     #if 'right' in own.name:

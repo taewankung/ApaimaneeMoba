@@ -1,12 +1,10 @@
 from bge import logic
-from libs.apaimanee.characters.GameUnit import GameUnit
+from libs.apaimanee.characters.game_object import GameObject
 
-class Building(GameUnit):
+class Building(GameObject):
     
-    def __init__(self, controller,unit,enemy_list):
-        super().__init__(controller,
-                         unit,
-                         enemy_list)
+    def __init__(self, owner):
+        super().__init__(owner)
         #self,building_team = building_team
     
     def attack(self,damaged):
