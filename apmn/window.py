@@ -65,7 +65,8 @@ class Window(QWidget):
     session = dict()
 
     def __init__(self, config):
-        super(Window, self).__init__()
+        super().__init__()
+        self.setWindowTitle("Apaimanee MOBA");
 
         self.config = config
 

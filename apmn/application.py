@@ -32,6 +32,6 @@ class Application(object):
     def start(self):
 
         window = Window(self.config)
-        window.show()
+        window.showMaximized()
         window.welcome()
         return self.app.exec_()

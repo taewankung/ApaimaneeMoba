@@ -1,1 +1,17 @@
-Hello world
+{% extends "/base/base_layout.jinja2" %}
+{% block content %}
+    <div id="wrapper">
+      <div id="login">
+          <h1>Login Game</h1>
+            {{message}}
+              <form action='/login' method='GET'>
+                Username: <br>{{form.username}}
+                <br>
+                User password: <br>{{form.password}}
+                <br><br>
+                <button type="submit" class="Button">login</button>
+                <a href="/register"><button type="button" class="Button">register</button></a>
+              </form>
+      </div>
+     </div>
+{% endblock %}
