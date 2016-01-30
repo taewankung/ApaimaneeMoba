@@ -1,0 +1,24 @@
+{% extends "/base/base_layout.jinja2" %}
+{% block content %}
+  <div align="center">
+      <br><br><br>
+      <h1>Account Register</h1>
+      <br><br>
+      {{message}}
+      <form action="/register" method="GET">
+         UserName:<br>{{form.username}}<br><br>
+         Password:<br>{{form.password}}<br><br>
+         Confirm Password:<br>{{form.confirmpassword}}<br><br>
+         First Name:<br>{{form.firstname}}<br><br>
+         Last Name:<br>{{form.lastname}}<br><br>
+         Email: <br>{{form.email}}<br><br><br>
+
+         <button type="button">register</button>
+         <button type="reset" value="Reset">Reset</button>
+         <a href="/login"><button type="button">login</button></a>
+  </form>
+  </div>
+  <div id="footer">
+      Apaimanee MOBA
+  </div>
+{% endblock %}

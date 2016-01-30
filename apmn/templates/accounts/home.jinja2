@@ -1,0 +1,27 @@
+{% extends "/base/base_layout.jinja2" %}
+{% block content %}
+
+  <div id="wrapper">
+    <div id="login">
+      <h2>Apaimanee MOBA</h2>
+    </div>
+    <div id="box_right">
+      <div id="buttonGame">
+        <a href="/games/create_room"><button type="button" class="Button"> CREATE GAME </button></a>
+      </div>
+    </div>
+    <div id="box_left">
+      <table >
+         <tr>
+            <th>ID ROOM</th>
+            <th>NAME ROOM</th>
+            <th>Players</th>
+         </tr>
+         <tr>
+            <td>123456</td>
+            <td><a href="/games/room">NSC2016</a></td>
+            <td>10/10</td>
+         </tr>
+     </table></div>
+</div>
+{% endblock %}

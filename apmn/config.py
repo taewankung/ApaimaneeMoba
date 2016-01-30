@@ -22,11 +22,6 @@ class Configuration:
         self.__parse()
 
     def __parse(self):
-        if self.config_file is None:
-            return
-
-        config_parser = configparser.ConfigParser()
-        config_parser.read(self.config_file)
 
         sections = ["hawkeye"]
 
@@ -36,6 +31,13 @@ class Configuration:
 
         for key in boolean_conf:
             self.settings[key] = False
+
+        self.settings['debug'] = True
+        if self.config_file is None:
+            return
+
+        config_parser = configparser.ConfigParser()
+        config_parser.read(self.config_file)
 
         for section in sections:
             if not config_parser.has_section(section):
