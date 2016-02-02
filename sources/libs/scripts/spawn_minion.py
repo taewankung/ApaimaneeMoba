@@ -10,7 +10,7 @@ def run():
     #obj['mempath'] = 'chekpoint_central1'
     spawn_unit = SpawnUnit(spawner, obj)
 
-    spawn_unit.spawn(10)
+    spawn_unit.spawn(30)
 
     minions = spawn_unit.last_spawn_object()
     for minion in minions:

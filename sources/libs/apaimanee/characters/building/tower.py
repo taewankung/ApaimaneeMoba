@@ -29,6 +29,4 @@ class Tower(Building):
                         dist = character.getDistanceTo(self)
                         obj = character
                         self.sendMessage("attack",str(obj),str(self.spawn_bullet))
-                        #print(obj)
                         return obj
-           # self.sendMessage("attack",str(damage),controller.sen)

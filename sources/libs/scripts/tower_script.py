@@ -1,9 +1,11 @@
 from bge import logic
 from libs.apaimanee.characters.building.tower import Tower
-from libs.apaimanee.characters.building.SpawnBullet import SpawnBullet
+#from libs.apaimanee.characters.building.SpawnBullet import SpawnBullet
 def initial(cont):
     owner = cont.owner
-    multated_obj = Tower(owner)
+    spawn_str = "spawn_bullet"+owner.name[5:]
+    #print(spawn_str)
+    multated_obj = Tower(owner,spawn_bullet=spawn_str)
 
 def run():
     #tower_unit = scene.objects[unit]
@@ -12,7 +14,7 @@ def run():
     if not type(cont.owner) is Tower:
         initial(cont)
     owner = cont.owner
-    #print(owner.id)
+    #print("tower ",owner.id)
     owner.damaged()
     owner.attack()
     if owner["hp"] == 0:
