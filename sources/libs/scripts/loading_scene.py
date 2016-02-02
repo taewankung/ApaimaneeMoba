@@ -1,5 +1,6 @@
 from bge import logic
 import time
+import datetime
 
 import sys
 import argparse
@@ -23,8 +24,8 @@ def loading_scene():
     parser.add_argument('--host', nargs='?', const='localhost',
                         default='localhost',
                         help='ApamneeMOBA API host')
-    parser.add_argument('--port', nargs='?', const='1883',
-                        default='1883',
+    parser.add_argument('--port', nargs='?', const=1883,
+                        default=1883,
                         help='ApamneeMOBA API port')
 
 
@@ -46,6 +47,22 @@ def loading_scene():
     ac = ApaimaneeMOBAClient(args.client_id,
                              args.host, args.port,
                              args.room_id)
+
+    gc = ac.game_client
+    gc.initial()
+    # remove if release
+    if args.client_id == 'test_client_id' and args.room_id == 'test_room_id':
+        gc.user.loggedin_info = dict(token='test_token')
+        gc.room.current_room = dict(room_id=args.room_id)
+    gc.game.ready()
+
+# need for improve delay
+#    start_time = datetime.datetime.now()
+#    while(True):
+#        print('wait for singnal')
+#        diff_time = datetime.datetime.now() - start_time
+#        if diff_time > datetime.timedelta(minutes=2):
+#            sys.exit()
 
     # wait start game signal from apaimanee server
 
