@@ -1,5 +1,5 @@
 import bge 
-from libs.apaimanee.characters.SpawnUnit import SpawnUnit
+from libs.apaimanee.characters.spawn_unit import SpawnUnit
 import math
 import uuid
 
@@ -26,7 +26,7 @@ class SpawnBullet(bge.types.KX_GameObject):
     def spawn(self,traget):
         track = self.cont.actuators["Track"]
         message_sen = self.cont.sensors["Message"]
-        spawn_act = self.cont.actuators["spawn"]
+        spawn_act = self.cont.actuators["Spawn"]
         send_msg_bullet = self.cont.actuators["Message"]
         #print(message_sen.bodies[0])
         if message_sen.positive :
@@ -50,6 +50,6 @@ class SpawnBullet(bge.types.KX_GameObject):
             
                 
     def check_destroy(self):
-        destroyed_mes = self.cont.sensors["destroyed"] 
+        destroyed_mes = self.cont.sensors["Destroyed"] 
         if destroyed_mes.positive:
             self.endObject()

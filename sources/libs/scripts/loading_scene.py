@@ -47,10 +47,13 @@ def initial_game():
 
     ac.connect()
     gc = ac.game_client
+    
     # remove if release
     if args.client_id == 'test_client_id' and args.room_id == 'test_room_id':
         gc.user.loggedin_info = dict(token='test_token')
         gc.room.current_room = dict(room_id=args.room_id)
+    
+    
     gc.game.ready()
     logger.info('Apaimanee Game load ready')
 
@@ -73,7 +76,7 @@ def loading_scene():
         diff_time = datetime.datetime.now() - start_time
         print('wait for play singnal', diff_time.seconds)
 
-        if diff_time > datetime.timedelta(seconds=10):
+        if diff_time > datetime.timedelta(minutes=2):
             game_out_actualtor = cont.actuators['GameOut']
             print('time out')
             ac.disconnect()
@@ -81,7 +84,14 @@ def loading_scene():
 
 
     else:
-        initial_game()
+        
+        try:
+            initial_game()
+        except Exception as e:
+            print('Initial Fail:', e)
+            game_out_actualtor = cont.actuators['GameOut']
+            cont.activate(game_out_actualtor)
+
         owner['start_time'] = datetime.datetime.now()
 
 

@@ -22,5 +22,5 @@ class Bullet:
                     self.unit.sendMessage("attack_unitID",collision.hitObject.id,str(collision.hitObject))
                     print(collision.hitObject)
             self.unit.endObject()
-        if self.cont.sensors["Collision_ground"].positive :
+        if self.cont.sensors["CollisionGround"].positive :
             self.unit.endObject()

@@ -33,6 +33,6 @@ class ApaimaneeMOBAClient(metaclass=Singleton):
             self.game_client.gm.register(self.game_logic)
 
     def disconnect(self):
-        self.game_client.discon
+        self.game_client.disconnect()
 
 

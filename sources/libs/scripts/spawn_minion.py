@@ -1,5 +1,5 @@
 from bge import logic
-from libs.apaimanee.characters.SpawnUnit import SpawnUnit
+from libs.apaimanee.characters.spawn_unit import SpawnUnit
 
 def run():
     scene = logic.getCurrentScene()

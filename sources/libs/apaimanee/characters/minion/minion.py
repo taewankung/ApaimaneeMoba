@@ -12,12 +12,12 @@ class Minion(GameObject):
                  creep_action):
         super().__init__(owner)
 
-        self.track = self.controller.actuators["track"]
-        self.animation = self.controller.actuators["animation"]
+        self.track = self.controller.actuators["Track"]
+        self.animation = self.controller.actuators["Animation"]
         self.near = self.controller.sensors["Near"]
-        self.col_enemy = self.controller.sensors["col_enemy"]
+        self.col_enemy = self.controller.sensors["EnemyCol"]
         self.move = self.controller.actuators["Move"]
-        self.attack_act = self.controller.actuators["attack_mes"]
+        self.attack_act = self.controller.actuators["AttackMes"]
         # self.scene = bge.logic.getCurrentScene()        
         self.skeleton_name = skeleton_name
         self.creep_action = creep_action
@@ -30,9 +30,9 @@ class Minion(GameObject):
     def move_unit(self):
         self.track.object = self.scene.objects[self["mem_path"]]
         self.controller.activate(self.track)
-        if self.controller.sensors["col_path"].positive :
-            self.track.object = self.controller.sensors["col_path"].hitObject["path"]
-            self["mem_path"]= self.controller.sensors["col_path"].hitObject["path"]
+        if self.controller.sensors["ColPath"].positive :
+            self.track.object = self.controller.sensors["ColPath"].hitObject["path"]
+            self["mem_path"]= self.controller.sensors["ColPath"].hitObject["path"]
         
         if self.near.positive:
             hit_objs = self.near.hitObjectList

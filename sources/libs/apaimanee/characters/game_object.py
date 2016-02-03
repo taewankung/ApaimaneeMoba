@@ -29,7 +29,7 @@ class GameObject(bge.types.KX_GameObject):
         return self
 
     def show_status(self):
-        print("Name: ", self["name"])
+        print("Name: ", self["unit_name"])
         print("hp: ", self["hp"])
         print("id: ",id(self))
         if(self["alive"] == False ):
@@ -43,7 +43,7 @@ class GameObject(bge.types.KX_GameObject):
         if self.controller.sensors["Message"].positive and self.controller.sensors["id_message"].positive:
             enemy = self.controller.sensors["Message"].bodies[0]
             #print(enemy)#enemy attack
-            id_message_sensor_body = self.controller.sensors["id_message"].bodies[0]
+            id_message_sensor_body = self.controller.sensors["IdMessage"].bodies[0]
             if id_message_sensor_body == self.id:
                 if enemy in scene.objects:
                     obj_enemy_in_scene = scene.objects[enemy]#

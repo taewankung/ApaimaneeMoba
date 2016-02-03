@@ -22,7 +22,7 @@ class Hero(GameObject):
         self.click = self.controller.sensors["ClickR"]
         self.move = self.controller.actuators["Move"]
         self.collision = self.controller.sensors["Collision"]
-        self.enemy_col = self.controller.sensors["enemy_col"]
+        self.enemy_col = self.controller.sensors["EnemyCol"]
         self.bone_name = bone_name
         self.bone_action = bone_action
         self.curren_scene = logic.getCurrentScene()
@@ -82,11 +82,11 @@ class Hero(GameObject):
             default_target.worldPosition.y = hitPosition.y
             default_target.worldPosition.x = hitPosition.x
             self.controller.activate(self.track)
-            target["states"] =str(hit_object)
-            target["id_obj_clicked"] =hit_object.id
+            target["States"] =str(hit_object)
+            target["IdObjClicked"] =hit_object.id
         if  self.enemy_col.positive:
             self.controller.deactivate(self.move)
-            self["states"] = "attack"
+            self["States"] = "attack"
             for bone in self.children:
                 if bone.name == self.bone_name:
                     bone.playAction(self.bone_action,
@@ -97,10 +97,10 @@ class Hero(GameObject):
                                    )
                 if math.fabs(bone.getActionFrame()-end_frame)< 99e-2:
                     bone.stopAction()
-                    self.sendMessage('attack',str(self.name),target["states"])
-                    self.sendMessage('attack_unitID',target["id_obj_clicked"],target["states"])
+                    self.sendMessage('attack',str(self.name),target["States"])
+                    self.sendMessage('attack_unitID',target["IdObjClicked"],target["States"])
         elif not self.enemy_col.positive and click_enemy:
-            self["states"] = "move"
+            self["States"] = "move"
             self.controller.activate(self.move)
 
 
@@ -108,9 +108,9 @@ class Hero(GameObject):
         pass
 
     def gold_increase(self, gold):
-        if self.controller.sensors["Message_reward"].positive:
-            print(self.controller.sensors["Message_reward"].bodies)
-            self["gold"] += int(self.controller.sensors["Message_reward"].bodies[0])
+        if self.controller.sensors["MessageReward"].positive:
+            print(self.controller.sensors["MessageReward"].bodies)
+            self["gold"] += int(self.controller.sensors["MessageReward"].bodies[0])
 
     def reborn(self):
         self["alive"] = True
