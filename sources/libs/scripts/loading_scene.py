@@ -8,8 +8,10 @@ import sys
 import argparse
 
 
+from libs.apaimanee.client import ApaimaneeMOBAClient
+
 def initial_game():
-    print("arg:", sys.argv)
+    # print("arg:", sys.argv)
     parser = argparse.ArgumentParser(prog='ApaimaneeMOBA',
                                      description='Apaimanee MOBA Game')
     parser.add_argument('blend', nargs='?',
@@ -39,21 +41,18 @@ def initial_game():
     logger.info('Try to connect to host {} port {} client_id {} room_id {}'.format(args.host, args.port, args.client_id, args.room_id))
 
 
-    from libs.apaimanee.client import ApaimaneeMOBAClient
     ac = ApaimaneeMOBAClient(args.client_id,
                              args.host, args.port,
                              args.room_id)
 
+    ac.connect()
     gc = ac.game_client
-    gc.initial()
     # remove if release
     if args.client_id == 'test_client_id' and args.room_id == 'test_room_id':
         gc.user.loggedin_info = dict(token='test_token')
         gc.room.current_room = dict(room_id=args.room_id)
     gc.game.ready()
-
-    print('xxx')
-
+    logger.info('Apaimanee Game load ready')
 
 def loading_scene():
     cont = bge.logic.getCurrentController()
@@ -62,15 +61,22 @@ def loading_scene():
     owner = cont.owner
 
     if 'start_time' in owner:
-        if False:
+        ac = ApaimaneeMOBAClient()
+        if ac.game_logic.status == 'play':
+
+            logger = logging.getLogger('apmn')
+            logger.info('Play game')
+
             cont.activate(scene_act)
 
         start_time = owner['start_time']
         diff_time = datetime.datetime.now() - start_time
-        print('wait for singnal', diff_time.seconds)
+        print('wait for play singnal', diff_time.seconds)
+
         if diff_time > datetime.timedelta(seconds=10):
             game_out_actualtor = cont.actuators['GameOut']
-            print('out of time')
+            print('time out')
+            ac.disconnect()
             cont.activate(game_out_actualtor)
 
 
