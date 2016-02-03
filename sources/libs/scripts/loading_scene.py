@@ -1,15 +1,14 @@
-from bge import logic
+import bge
 import time
 import datetime
 
+import logging
+import logging.config
 import sys
 import argparse
 
 
-def loading_scene():
-    cont = logic.getCurrentController()
-    scene_act = cont.actuators["Scene"]
-
+def initial_game():
     print("arg:", sys.argv)
     parser = argparse.ArgumentParser(prog='ApaimaneeMOBA',
                                      description='Apaimanee MOBA Game')
@@ -33,9 +32,6 @@ def loading_scene():
 
     args = parser.parse_args()
 
-    import logging
-    import logging.config
-
     logging.config.fileConfig('logging.conf')
     logger = logging.getLogger('apmn')
 
@@ -56,14 +52,30 @@ def loading_scene():
         gc.room.current_room = dict(room_id=args.room_id)
     gc.game.ready()
 
-# need for improve delay
-#    start_time = datetime.datetime.now()
-#    while(True):
-#        print('wait for singnal')
-#        diff_time = datetime.datetime.now() - start_time
-#        if diff_time > datetime.timedelta(minutes=2):
-#            sys.exit()
+    print('xxx')
 
-    # wait start game signal from apaimanee server
 
-    cont.activate(scene_act)
+def loading_scene():
+    cont = bge.logic.getCurrentController()
+    scene_act = cont.actuators["Scene"]
+
+    owner = cont.owner
+
+    if 'start_time' in owner:
+        if False:
+            cont.activate(scene_act)
+
+        start_time = owner['start_time']
+        diff_time = datetime.datetime.now() - start_time
+        print('wait for singnal', diff_time.seconds)
+        if diff_time > datetime.timedelta(seconds=10):
+            game_out_actualtor = cont.actuators['GameOut']
+            print('out of time')
+            cont.activate(game_out_actualtor)
+
+
+    else:
+        initial_game()
+        owner['start_time'] = datetime.datetime.now()
+
+
