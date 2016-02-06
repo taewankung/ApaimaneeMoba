@@ -10,6 +10,7 @@ from PyQt5.QtWebKitWidgets import QWebPage, QWebView, QWebInspector
 from PyQt5.QtWebKit import QWebSettings
 from PyQt5.QtNetwork import *
 
+from urllib import parse
 from jinja2 import Environment, PackageLoader
 
 import logging
@@ -99,7 +100,7 @@ class Window(QWidget):
 
 
         self.apaimanee_client = ApaimaneeClient(None, self.config.settings['apmn.host'], self.config.settings['apmn.port'])
-
+        self.apaimanee_client.initial()
 
         # add debug inspector
         if self.config.settings.get("debug", False):
@@ -137,7 +138,7 @@ class Window(QWidget):
  #       print("\n\ngot url: ", qurl)
         qqurl = QUrlQuery(qurl)
         for key, value in qqurl.queryItems():
-            elements[key] = value
+            elements[key] = parse.unquote(value)
 
         self.render(qurl.path(), elements)
         # do stuff with elements...
