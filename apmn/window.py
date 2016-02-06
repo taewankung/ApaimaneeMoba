@@ -18,6 +18,7 @@ logger = logging.getLogger(__name__)
 import os
 
 from . import context
+from apmn_client.client import ApaimaneeClient
 
 class WebPage(QWebPage):
     form_submitted = pyqtSignal(QUrl, QVariant)
@@ -95,6 +96,10 @@ class Window(QWidget):
         # layout attribute
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
+
+
+        self.apaimanee_client = ApaimaneeClient(None, self.config.settings['apmn.host'], self.config.settings['apmn.port'])
+
 
         # add debug inspector
         if self.config.settings.get("debug", False):
@@ -178,7 +183,7 @@ class Window(QWidget):
 
         if route is not None:
             view = route.get('view')
-            context_obj = context.ResourceContext(self.config, self.session)
+            context_obj = context.ResourceContext(self.config, self.session, self.apaimanee_client)
             context_obj.add_args(args)
             try:
                 response = view(context_obj)

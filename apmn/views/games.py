@@ -18,3 +18,6 @@ def create_room(request):
 
 def room(request):
     return dict()
+
+def select_hero(request):
+    return dict()
