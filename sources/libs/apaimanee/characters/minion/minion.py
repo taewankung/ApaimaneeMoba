@@ -21,7 +21,7 @@ class Minion(GameObject):
         # self.scene = bge.logic.getCurrentScene()        
         self.skeleton_name = skeleton_name
         self.creep_action = creep_action
-    
+        self.time_attack = 0 
     def set_first_path(self,first_path):
         if self["init"] == 0 :
             self["mem_path"] = first_path 
@@ -79,12 +79,20 @@ class Minion(GameObject):
                                               90,117.0000000000000000000000000000,
                                               play_mode = bge.logic.KX_ACTION_MODE_PLAY,
                                               speed=1)
-                    #print(bone.getActionFrame())
+                    self.time_attack = self.time_attack+1
+
                     if math.fabs(bone.getActionFrame()) >= 117-0.3:
-                    #    print("ss")
                         bone.stopAction()
                         self.sendMessage("attack",self.name,str(enemy))
-                        self.sendMessage("attack_unitID",str(enemy.id),str(enemy)) 
+                        #print("attack now !!!")
+                        self.sendMessage("attack_unitID",str(enemy.id),str(enemy))
+                    elif self.time_attack%68<=0:
+                        #print("attack now !!! ",self.time_attack)
+                        self.sendMessage("attack",self.name,str(enemy))
+                        self.sendMessage("attack_unitID",str(enemy.id),str(enemy))
+
+ 
+
                  
     def die_and_gold(self):
         if self.controller.sensors["Message"].positive:
