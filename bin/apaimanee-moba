@@ -13,15 +13,22 @@ import os
 import logging.config
 
 if __name__ == '__main__':
-    app_config = config.Configuration()
-   # initial logging
-    #directory = config.settings.get('apmn.log_dir')
-    #if not os.path.exists(directory):
-        #os.makedirs(directory)
+    app_config = None
 
-    #logging.config.fileConfig(sys.argv[1])
-    #logger = logging.getLogger()
-    #logger.debug("welcome_message")
+    if len(sys.argv) > 1:
+        app_config = config.Configuration(sys.argv[1])
+
+        directory = app_config.settings.get('apmn.log_dir')
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+
+        # initial logging
+        logging.config.fileConfig(sys.argv[1])
+        logger = logging.getLogger()
+        logger.info("welcome_message")
+
+    else:
+        app_config = config.Configuration()
 
     app = application.Application(app_config)
     app.start()

@@ -35,13 +35,11 @@ def login(request):
                     )
 
     try:
-        #data = request.nokkhum_client.account.authenticate(email, password)
+        data = request.apmn_client.user.login(username, password)
         #print ('data:', data)
         #if 'access' not in data:
         #    raise 'error'
-        if username == 'test' and password == 'test':
-            data = dict(username=username, password=password)
-        else:
+        if not data['responses']['loggedin']:
             raise 'password missmatch'
 
         request.remember(data)
@@ -59,7 +57,7 @@ def register(request):
     if len(request.matchdict) == 0:
         return dict(form=form)
     if len(request.matchdict) > 0 and form.validate():
-        name = form.data.get('name')
+        username = form.data.get('username')
         firstname = form.data.get('firstname')
         lastname = form.data.get('lastname')
         confirmpassword = form.data.get('confirmpassword')
@@ -68,12 +66,11 @@ def register(request):
     else:
         return dict(
                     form = form,
-                    message = "check password confirm!"
+                    message = "Prease recheck field"
                     )
 
     try:
-        data = request.nokkhum_client.account.register(name, surname, password, email)
-        #print ('data:', data)
+        data = request.apmn_client.user.register(username, password, email, firstname, lastname)
         if data is None or 'error' in data:
             raise Exception('error')
 

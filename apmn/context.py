@@ -12,11 +12,12 @@ class MatchDict(dict):
         return [self.get(name)]
 
 class ResourceContext:
-    def __init__(self, config, session):
+    def __init__(self, config, session, apmn_client=None):
         ''''''
         self.config = config
         self.matchdict = MatchDict()
         self.session = session
+        self.apmn_client = apmn_client
 
     def route_url(self, name):
         return self.route_path(name)

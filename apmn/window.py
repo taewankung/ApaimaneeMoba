@@ -10,6 +10,7 @@ from PyQt5.QtWebKitWidgets import QWebPage, QWebView, QWebInspector
 from PyQt5.QtWebKit import QWebSettings
 from PyQt5.QtNetwork import *
 
+from urllib import parse
 from jinja2 import Environment, PackageLoader
 
 import logging
@@ -18,6 +19,7 @@ logger = logging.getLogger(__name__)
 import os
 
 from . import context
+from apmn_client.client import ApaimaneeClient
 
 class WebPage(QWebPage):
     form_submitted = pyqtSignal(QUrl, QVariant)
@@ -96,6 +98,10 @@ class Window(QWidget):
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
 
+
+        self.apaimanee_client = ApaimaneeClient(None, self.config.settings['apmn.host'], self.config.settings['apmn.port'])
+        self.apaimanee_client.initial()
+
         # add debug inspector
         if self.config.settings.get("debug", False):
             self.setup_inspector()
@@ -132,7 +138,7 @@ class Window(QWidget):
  #       print("\n\ngot url: ", qurl)
         qqurl = QUrlQuery(qurl)
         for key, value in qqurl.queryItems():
-            elements[key] = value
+            elements[key] = parse.unquote(value)
 
         self.render(qurl.path(), elements)
         # do stuff with elements...
@@ -178,7 +184,7 @@ class Window(QWidget):
 
         if route is not None:
             view = route.get('view')
-            context_obj = context.ResourceContext(self.config, self.session)
+            context_obj = context.ResourceContext(self.config, self.session, self.apaimanee_client)
             context_obj.add_args(args)
             try:
                 response = view(context_obj)

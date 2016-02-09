@@ -23,10 +23,10 @@ class Configuration:
 
     def __parse(self):
 
-        sections = ["hawkeye"]
+        sections = ["apmn"]
 
         boolean_conf    = ['debug']
-        integer_conf    = ['nokkhum.api.port']
+        integer_conf    = ['apmn.port']
 
 
         for key in boolean_conf:
@@ -49,8 +49,12 @@ class Configuration:
                 elif k in integer_conf:
                     self.settings[k] = config_parser.getint(section, k)
                 else:
-                    self.settings[k] = v.replace("hawkeye:", self.current_project_path+"/")
+                    self.settings[k] = v.replace("apmn:", self.current_project_path+"/")
 
+        if not 'apmn.port' in self.settings:
+            self.settings['apmn.port'] = 1883
+        if not 'apmn.host' in self.settings:
+            self.settings['apmn.host'] = 'localhost'
 
 
     def add_route(self, name, url, view, renderer=None):
