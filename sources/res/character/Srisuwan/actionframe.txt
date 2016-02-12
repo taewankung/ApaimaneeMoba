@@ -1,0 +1,6 @@
+run 150-170
+attack 180-220
+stand 5-20
+dead 30-45
+skill1 50-65
+skill Unti 69-73

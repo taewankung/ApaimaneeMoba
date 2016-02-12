@@ -31,8 +31,8 @@ class Minion(GameObject):
         self.track.object = self.scene.objects[self["mem_path"]]
         self.controller.activate(self.track)
         if self.controller.sensors["ColPath"].positive :
-            self.track.object = self.controller.sensors["ColPath"].hitObject["path"]
-            self["mem_path"]= self.controller.sensors["ColPath"].hitObject["path"]
+            self.track.object = self.controller.sensors["ColPath"].hitObject["path_"+self["team"]]
+            self["mem_path"]= self.controller.sensors["ColPath"].hitObject["path_"+self["team"]]
         
         if self.near.positive:
             hit_objs = self.near.hitObjectList
@@ -98,5 +98,6 @@ class Minion(GameObject):
         if self.controller.sensors["Message"].positive:
             enemy = self.controller.sensors["Message"].bodies[0]
             self.sendMessage("reward","90",enemy)
+            print("die!!")
             self.endObject()
             pass

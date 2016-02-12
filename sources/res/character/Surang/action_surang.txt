@@ -1,0 +1,7 @@
+attack 180-200
+skill1 202-214
+skill2 215-227
+skill3 
+skill_Untimate 230-246
+run 150-170
+dead 250-261

@@ -1,0 +1,4 @@
+run 5-25
+attack 30-45
+skill2(dead) 50-59
+dead 65-72

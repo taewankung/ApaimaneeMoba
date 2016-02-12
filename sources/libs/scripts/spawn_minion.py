@@ -6,7 +6,7 @@ def run():
     #unit = scene.objects["Armature_creep"]
     cont = logic.getCurrentController()
     spawner = cont.owner
-    obj = scene.objectsInactive["box_minion"]
+    obj = scene.objectsInactive["box_minion_"+spawner["team"]]
     #obj['mempath'] = 'chekpoint_central1'
     spawn_unit = SpawnUnit(spawner, obj)
 
