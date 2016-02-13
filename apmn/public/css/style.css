@@ -25,9 +25,11 @@ body{
 }
 #login{
 	width: auto;
-	height: 150px;
+	height: 100px;
 	font-size: 24px;
 	margin-left: 400px;
+  position: relative;
+  top: 450px;
 }
 #creategame{
 	width: auto;
@@ -59,7 +61,7 @@ body{
 .ButtonStart{
 width: 350px;
 height: 60px;
-background:#F50000;
+background: #303030;
 
 font-family:Tahoma, Geneva, sans-serif;
 
@@ -98,7 +100,7 @@ background:#49C4D4;
 .Button{
 width: 350px;
 height: 60px;
-background:#F50000;
+background: #303030;
 
 font-family:Tahoma, Geneva, sans-serif;
 
@@ -132,7 +134,7 @@ border-top:none;
 
 margin:10px 0 10px 0;
 
-background:#49C4D4;
+background:#303030;
 
 }
 }

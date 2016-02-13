@@ -35,8 +35,31 @@ def create_room(request):
     return request.redirect_url('/games/room')
 
 
+def join_game(request):
+    room_id = request.matchdict['room_id']
+    requestdata = request.apmn_client.room.join_game(room_id)
+
+    return request.redirect_url('/games/room')
+
+
+
 def room(request):
-    return dict()
+    requestdata = request.apmn_client.room.list_players()
+    print('list_players', requestdata)
+
+    players = requestdata['responses']['players']
+    team1 = []
+    team2 = []
+
+    for player in players:
+        if player["team"] == "team1":
+            team1.append(player)
+        else:
+            team2.append(player)
+
+    return dict(team1=team1, team2=team2)
+
+
 
 def select_hero(request):
     return dict()

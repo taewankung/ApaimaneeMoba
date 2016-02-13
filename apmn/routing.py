@@ -13,3 +13,4 @@ def add_route(config):
     config.add_route('games.create_room', '/games/create_room', games.create_room, '/games/create_room.jinja2')
     config.add_route('games.room', '/games/room', games.room, '/games/room.jinja2')
     config.add_route('games.select_hero', '/games/select_hero', games.select_hero,'/games/select_hero.jinja2')
+    config.add_route('games.join_game', '/games/join_game', games.join_game, None)

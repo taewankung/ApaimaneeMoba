@@ -13,14 +13,27 @@
   </div>
 
 	<div id="div1">
-		<div class="CSSTableGenerator" >
 		<table>
 		  <tr>
 		    <th>TEAM 1</th>
 		    <th>TEAM 2</th>
 		  </tr>
+      {% for i in range(0,5) %}
 		  <tr>
+        {% if i < team1 | count %}
+        <td>{{team1[i]['username']}}</td>
+        {% else %}
+        <td>&nbsp;</td>
+        {% endif %}
+
+        {% if i < team2 | count %}
+        <td>{{team2[i]['username']}}</td>
+        {% else %}
+        <td>&nbsp;</td>
+        {% endif %}
+
 		  </tr>
-		</table></div>
+      {% endfor%}
+		</table>
 </div>
 {% endblock %}
