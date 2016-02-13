@@ -1,4 +1,5 @@
 from bge import logic
+from bge import events
 from libs.apaimanee.characters.hero.hero import Hero
 
 def initial(cont):
@@ -35,9 +36,10 @@ def hero_controller():
     hero_dict = {
                     "sinsamut":{"move_start":156,
                                 "move_end":174,
-                                "attack_start":10,
-                                "attack_end":37
-
+                                "attack_start":70,
+                                "attack_end":90,
+                                "skill_1_start":10,
+                                "skill_1_end":37
                     }
                 }
     owner.move_unit(target,hero_dict[owner.name]["move_start"],
@@ -46,6 +48,17 @@ def hero_controller():
     owner.attack(target,hero_dict[owner.name]["attack_start"],
                  hero_dict[owner.name]["attack_end"],1
                  )
+    for key,status in cont.sensors["Keyboard"].events:
+        if  status == logic.KX_INPUT_JUST_ACTIVATED:
+                if key == events.QKEY:
+                    owner.skill_action(hero_dict[owner.name]["skill_1_start"],
+                                      hero_dict[owner.name]["skill_1_end"]
+                                     )
+                    print("skill1")
+                elif key == events.WKEY:  
+                    print("skill2")
+                elif key == events.EKEY:  
+                    print("skill3")
     owner.gold_increase(1)
     owner.damaged()
 #hero.show_status()

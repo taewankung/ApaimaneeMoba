@@ -3,7 +3,7 @@ from bge import render
 import Rasterizer
 Rasterizer.showMouse(True)
 from libs.apaimanee.menu.menu_scripts.StatusBar import StatusBar
-from libs.apaimanee.menu.menu_scripts.HudCamera import HudCamera
+from libs.apaimanee.menu.menu_scripts.hud_camera_controller import HudCamera
 from libs.apaimanee.characters.hero.hero import Hero
 
 def run_hud_interface():
