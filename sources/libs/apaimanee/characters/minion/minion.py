@@ -53,8 +53,7 @@ class Minion(GameObject):
                                 self.controller.deactivate(self.move)
                                 #print(type(item))
                                 self["states"]="attack"
-                                if self["states"]=="attack":
-                                    self.attack(obj)
+                                self.attack(obj)
 
                     if item["team"] == self["team"]:
                         count = count+1
