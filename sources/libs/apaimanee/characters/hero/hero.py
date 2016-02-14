@@ -12,6 +12,7 @@ class Hero(GameObject):
     
     def __init__(self,
                  owner,
+                 #click_point_obj,
                  bone_name='',
                  bone_action='',
                  ):
@@ -26,6 +27,7 @@ class Hero(GameObject):
         self.bone_name = bone_name
         self.bone_action = bone_action
         self.curren_scene = logic.getCurrentScene()
+        #self.click_poin_obj = click_point_obj
     
     def getName(self):
         return self["unit_name"]
@@ -62,8 +64,8 @@ class Hero(GameObject):
         elif not self.collision.positive:
             if self["states"] == "move":
                 for bone in self.children:
-                        if bone.name == self.bone_name:
-                            bone.playAction(self.bone_action,
+                        if bone.name == str(self.name)+"_bone":
+                            bone.playAction(str(bone.name)+"_action",
                                             start_frame,
                                             end_frame,
                                             play_mode = logic.KX_ACTION_MODE_PLAY,
@@ -84,6 +86,7 @@ class Hero(GameObject):
             self.controller.activate(self.track)
             target["States"] =str(hit_object)
             target["IdObjClicked"] =hit_object.id
+        
         if  self.enemy_col.positive:
             self.controller.deactivate(self.move)
             self["States"] = "attack"
@@ -118,6 +121,16 @@ class Hero(GameObject):
     def die(self):
         self["alive"] = False
 
+    def skill_action(self,start_frame,end_frame):
+        for bone in self.children:
+            if bone.name == self.bone_name:
+                bone.playAction(self.bone_action,
+                                start_frame,
+                                end_frame,
+                                play_mode = logic.KX_ACTION_MODE_PLAY,
+                                speed = 1
+                                )
+         
     def get_when_die(self, kda):
         gift=[]
         self["gold"] = kda * 500

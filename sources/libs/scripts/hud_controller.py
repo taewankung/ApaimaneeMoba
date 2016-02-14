@@ -3,7 +3,7 @@ from bge import render
 import Rasterizer
 Rasterizer.showMouse(True)
 from libs.apaimanee.menu.menu_scripts.StatusBar import StatusBar
-from libs.apaimanee.menu.menu_scripts.HudCamera import HudCamera
+from libs.apaimanee.menu.menu_scripts.hud_camera_controller import HudCamera
 from libs.apaimanee.characters.hero.hero import Hero
 
 def run_hud_interface():
@@ -21,6 +21,7 @@ def run_hud_interface():
                     mp_bar_obj = scene.objects["mp_bar"]
                     hud_camera_obj = scene.objects["Hud_camera"]
                     unit = scene_main.objects["box_hero"]
+
                     hud_obj_dict = {
                         "hp_bar":hp_bar_obj,
                         "mp_bar":mp_bar_obj,

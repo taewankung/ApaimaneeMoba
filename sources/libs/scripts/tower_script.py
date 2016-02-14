@@ -16,6 +16,7 @@ def run():
     owner = cont.owner
     #print("tower ",owner.id)
     owner.damaged()
+    #print(owner.name)
     owner.attack()
-    if owner["hp"] == 0:
+    if owner["hp"] <= 0:
         owner.destroyed()

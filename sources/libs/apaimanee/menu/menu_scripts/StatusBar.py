@@ -1,5 +1,6 @@
 from bge import logic
-class StatusBar:
+import bge
+class StatusBar(bge.types.KX_GameObject):
     #message_dict = Message_sensor
     #obj_bar = KX_GameObject in bge.logic Example: hp_bar,mp_bar and etc.
     #name_act = animetion name of object
@@ -11,7 +12,7 @@ class StatusBar:
                 max_value_name,
                 current_value_name,
                 ghost_value_name,
-                unit
+                unit=None
                 ):
             self.obj_bar =obj_bar
             self.value={"max_value":max_value_name,
@@ -29,11 +30,11 @@ class StatusBar:
         # status_bar change value
             self.current_per_value = self.unit[ value ]/self.unit[max_value]*100
             self.ghost_per_value = self.unit[ghost_value]/self.unit[max_value]*100
-            self.anime_start = self.ghost_per_value*10
-            self.anime_end = self.current_per_value*10
+            self.frame_start = self.ghost_per_value*10
+            self.frame_end = self.current_per_value*10
             self.obj_bar.playAction(self.name_act,
-                           self.anime_start,
-                           self.anime_end,
+                           self.frame_start,
+                           self.frame_end,
                            play_mode = logic.KX_ACTION_MODE_PLAY,
                            speed=100.0)
     
@@ -45,11 +46,11 @@ class StatusBar:
         # status_bar change value
             self.current_per_value = self.unit[ value ]/self.unit[max_value]*100
             self.ghost_per_value = self.unit[ghost_value]/self.unit[max_value]*100
-            self.anime_end = self.current_per_value*10
-            self.anime_start = self.ghost_per_value*10
+            self.frame_end = self.current_per_value*10
+            self.frame_start = self.ghost_per_value*10
             self.obj_bar.playAction(self.name_act,
-                           self.anime_start,
-                           self.anime_end,
+                           self.frame_start,
+                           self.frame_end,
                            play_mode = logic.KX_ACTION_MODE_PLAY,
                            speed=100.0)
     def update(self):

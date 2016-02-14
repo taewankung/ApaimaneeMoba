@@ -40,7 +40,7 @@ class GameObject(bge.types.KX_GameObject):
     def damaged(self):
         scene = bge.logic.getCurrentScene()
         obj = None
-        if self.controller.sensors["Message"].positive and self.controller.sensors["id_message"].positive:
+        if self.controller.sensors["Message"].positive and self.controller.sensors["IdMessage"].positive:
             enemy = self.controller.sensors["Message"].bodies[0]
             #print(enemy)#enemy attack
             id_message_sensor_body = self.controller.sensors["IdMessage"].bodies[0]
