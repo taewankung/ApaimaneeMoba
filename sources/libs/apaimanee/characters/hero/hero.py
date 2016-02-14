@@ -53,11 +53,11 @@ class Hero(GameObject):
                 default_target.worldPosition.y = hitPosition.y
                 default_target.worldPosition.x = hitPosition.x
                 self.controller.activate(self.track)
-                if self["states"]=="stand_by" or self['states']=='attack':
+                if self["states"]!='move':
                     self["states"] = "move"
                 self.controller.activate(self.move)
                 
-        if self.collision.positive:
+        if self.collision.positive: 
             if self["states"] == "move":
                 self.controller.deactivate(self.move)
                 self["states"] = "stand_by"
@@ -78,7 +78,7 @@ class Hero(GameObject):
         default_target = target
         click_enemy = False
 
-        if self.click.positive and self.mouse.positive and "team" in hit_object:
+        if self.click.positive and self.mouse.positive :
             click_enemy = True
             self.track.object = default_target
             default_target.worldPosition.y = hitPosition.y
@@ -86,26 +86,21 @@ class Hero(GameObject):
             self.controller.activate(self.track)
             target["States"] =str(hit_object)
             target["IdObjClicked"] =hit_object.id
-        
-        if  self.enemy_col.positive:
-            self.controller.deactivate(self.move)
-            self["States"] = "attack"
-            for bone in self.children:
-                if bone.name == self.bone_name:
-                    bone.playAction(self.bone_action,
-                                    start_frame,
-                                    end_frame,
-                                    play_mode = logic.KX_ACTION_MODE_PLAY,
-                                    speed = attack_speed
-                                   )
-                if math.fabs(bone.getActionFrame()-end_frame)< 99e-2:
-                    bone.stopAction()
-                    self.sendMessage('attack',str(self.name),target["States"])
-                    self.sendMessage('attack_unitID',target["IdObjClicked"],target["States"])
-        elif not self.enemy_col.positive and click_enemy:
-            self["States"] = "move"
-            self.controller.activate(self.move)
 
+        if self.enemy_col.positive and self["states"] != "attack":
+            self.controller.deactivate(self.move)
+            self.children[self.bone_name].playAction(self.bone_action,
+                                start_frame,
+                                end_frame,
+                                play_mode = logic.KX_ACTION_MODE_PLAY,
+                                speed = attack_speed
+                               )
+            self["states"] = "attack"
+        if math.fabs(self.children[self.bone_name].getActionFrame()-end_frame)< 99e-2:
+            self.children[self.bone_name].stopAction()
+            self["states"] = "end_attack"
+            self.sendMessage('attack',str(self.name),target["States"])
+            self.sendMessage('attack_unitID',target["IdObjClicked"],target["States"])
 
     def set_key(self, key):
         pass

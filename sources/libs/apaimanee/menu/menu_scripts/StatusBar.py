@@ -1,6 +1,6 @@
 from bge import logic
 import bge
-class StatusBar(bge.types.KX_GameObject):
+class StatusBar():
     #message_dict = Message_sensor
     #obj_bar = KX_GameObject in bge.logic Example: hp_bar,mp_bar and etc.
     #name_act = animetion name of object

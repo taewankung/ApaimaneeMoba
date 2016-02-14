@@ -20,7 +20,7 @@ def run_hud_interface():
                     hp_bar_obj = scene.objects["hp_bar"]
                     mp_bar_obj = scene.objects["mp_bar"]
                     hud_camera_obj = scene.objects["Hud_camera"]
-                    unit = scene_main.objects["box_hero"]
+                    unit = scene_main.objects["sinsamut"]
 
                     hud_obj_dict = {
                         "hp_bar":hp_bar_obj,
