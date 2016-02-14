@@ -1,4 +1,6 @@
 {% extends "/base/base_layout.jinja2" %}
+{% block addition_headers %}
+{% endblock%}
 {% block content %}
 
   <div id="wrapper">
@@ -8,6 +10,7 @@
     <div id="box_right">
       <div id="buttonGame">
         <a href="/games/create_room"><button type="button" class="Button"> CREATE GAME </button></a>
+        <a href="/home"><button type="button" class="Button"> Refresh Rooms </button></a>
       </div>
     </div>
     <div id="box_left">
@@ -17,11 +20,13 @@
             <th>NAME ROOM</th>
             <th>Players</th>
          </tr>
+        {% for room in rooms %}
          <tr>
-            <td>123456</td>
-            <td><a href="/games/room">NSC2016</a></td>
-            <td>10/10</td>
+           <td>{{ room['room_id'] }}</td>
+           <td><a href="/games/join_game?room_id={{ room['room_id'] }}">{{ room['room_name'] }}</a></td>
+           <td>{{ room['players'] | count }}/10</td>
          </tr>
+        {% endfor %}
      </table></div>
 </div>
 {% endblock %}

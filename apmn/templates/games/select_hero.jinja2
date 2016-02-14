@@ -22,82 +22,83 @@ margin-bottom: 5px;
 
 {% block content %}
 
-<div class="container"  action="/games/select_hero" method="GET">
+<div class="container">
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
-          <form class="form-horizontal well" role="form">
+          <form class="form-horizontal well" role="form" action="/games/select_hero" method="GET">
             <div class="row">
                 <div class="col-xs-4">
                     <img src="{{base_uri}}/public/images/apaimanee.jpg" class="btn-radio img-responsive img-radio"  style="width:150px;height:160px;">
                     <button type="button" class="btn btn-primary btn-radio">Apaimanee</button>
-                    <input type="checkbox" id="hero1" class="hidden">
+                    <input type="checkbox" name="hero" value="Apaimanee"  class="hidden">
                 </div>
 
                 <div class="col-xs-4">
                     <img src="{{base_uri}}/public/images/sinsamud.jpg" class="btn-radio img-responsive img-radio"  style="width:150px;height:160px;">
                     <button type="button" class="btn btn-primary btn-radio">Sinsamud</button>
-                    <input type="checkbox" id="hero2" class="hidden">
+                    <input type="checkbox" name="hero" value="Sinsamut"  class="hidden">
                 </div>
 
                 <div class="col-xs-4">
                     <img src="{{base_uri}}/public/images/pepo.jpg" class="btn-radio img-responsive img-radio" style="width:150px;height:160px;">
                     <button type="button" class="btn btn-primary btn-radio">Pepo</button>
-                    <input type="checkbox" id="hero3" class="hidden">
+                    <input type="checkbox" name="hero" value="Pepo"  class="hidden">
                 </div>
 
                 <div class="col-xs-4">
                     <img src="{{base_uri}}/public/images/sudsakorn.jpg" class="btn-radio img-responsive img-radio" style="width:150px;height:160px;">
                     <button type="button" class="btn btn-primary btn-radio">Sudsakorn</button>
-                    <input type="checkbox" id="hero4" class="hidden">
+                    <input type="checkbox"  name="hero" value="Sudsakorn" class="hidden">
                 </div>
 
                 <div class="col-xs-4">
                     <img src="{{base_uri}}/public/images/audsaren.jpg" class="btn-radio img-responsive img-radio" style="width:150px;height:160px;">
                     <button type="button" class="btn btn-primary btn-radio">Audsaren</button>
-                    <input type="checkbox" id="hero5" class="hidden">
+                    <input type="checkbox" name="hero" value="Aussaren"  class="hidden">
                 </div>
 
 
                 <div class="col-xs-4">
                     <img src="{{base_uri}}/public/images/aungura.jpg" class="btn-radio img-responsive img-radio"  style="width:150px;height:160px;">
                     <button type="button" class="btn btn-primary btn-radio">Aungura</button>
-                    <input type="checkbox" id="hero6" class="hidden">
+                    <input type="checkbox" name="hero"  value="Aungkurha"  class="hidden">
                 </div>
 
 
                 <div class="col-xs-4">
                     <img src="{{base_uri}}/public/images/yogy.jpg" class="btn-radio img-responsive img-radio" style="width:150px;height:160px;">
                     <button type="button" class="btn btn-primary btn-radio">Yogy</button>
-                    <input type="checkbox" id="hero7" class="hidden">
+                    <input type="checkbox" name="hero" value="Yogy" class="hidden">
                 </div>
 
 
                 <div class="col-xs-4">
                     <img src="{{base_uri}}/public/images/surhang.jpg" class="btn-radio img-responsive img-radio" style="width:150px;height:160px;">
                     <button type="button" class="btn btn-primary btn-radio"> Surhang </button>
-                    <input type="checkbox" id="hero8" class="hidden">
+                    <input type="checkbox" name="hero" value="Surhang"   class="hidden">
                 </div>
 
 
                 <div class="col-xs-4">
                     <img src="{{base_uri}}/public/images/laweng.jpg" class="btn-radio img-responsive img-radio" style="width:150px;height:160px;">
                     <button type="button" class="btn btn-primary btn-radio"> Laweng </button>
-                    <input type="checkbox" id="hero9" class="hidden">
+                    <input type="checkbox" name='hero' value="Laweng" class="hidden">
                 </div>
 
 
                 <div class="col-xs-4">
                     <img src="{{base_uri}}/public/images/srisuwan.jpg" class="btn-radio img-responsive img-radio"  style="width:150px;height:160px;">
                     <button type="button" class="btn btn-primary btn-radio"> Srisuwan</button>
-                    <input type="checkbox" id="hero10" class="hidden">
+                    <input type="checkbox" name="hero" value="Srisuwan" class="hidden">
                 </div>
-</form>
+
 </div></div></div></div>
             <div id="wrapper">
                 <div id="login">
-                <button type="submit"  class="Button" > Submit </button>
+                <button type="submit"  class="Button" > Choose </button>
                 </div>
             </div>
+</form>
 <script type="text/javascript">
 $(function () {
     $('.btn-radio').click(function(e) {

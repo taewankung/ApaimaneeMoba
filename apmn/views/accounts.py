@@ -11,7 +11,10 @@ logger = logging.getLogger(__name__)
 from apmn.forms import accounts as account_form
 
 def home(request):
-    return dict()
+    requestdata = request.apmn_client.room.list_rooms()
+    print(requestdata)
+
+    return dict(rooms=requestdata['responses']['rooms'])
 
 def login(request):
 

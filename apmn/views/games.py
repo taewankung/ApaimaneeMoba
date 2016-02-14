@@ -1,6 +1,10 @@
 from apmn.forms import games as games_form
 import logging
 logger = logging.getLogger("apmn")
+
+import subprocess
+game_process = None
+
 def create_room(request):
     if request.session.get('room_name',None):
         return request.redirect_url('/games/create_room')
@@ -35,8 +39,45 @@ def create_room(request):
     return request.redirect_url('/games/room')
 
 
+def join_game(request):
+    room_id = request.matchdict['room_id']
+    requestdata = request.apmn_client.room.join_game(room_id)
+
+    return request.redirect_url('/games/room')
+
+
+
 def room(request):
-    return dict()
+    requestdata = request.apmn_client.room.list_players()
+    print('list_players', requestdata)
+
+    players = requestdata['responses']['players']
+    team1 = []
+    team2 = []
+
+    for player in players:
+        if player["team"] == "team1":
+            team1.append(player)
+        else:
+            team2.append(player)
+
+    return dict(team1=team1, team2=team2)
+
+
 
 def select_hero(request):
+
+    if len(request.matchdict) == 0:
+        return dict()
+    print('select_hero', request.matchdict)
+    hero = request.matchdict['hero']
+    responsesdata = request.apmn_client.room.select_hero(hero)
+    return request.redirect_url('/games/load_game')
+
+
+
+def load_game(request):
+    print(request.config.__dict__)
+    argv = [request.config.current_project_path + '../apmn-game/ApaimaneeMOBA']
+    game_process = subprocess.Popen(argv)
     return dict()
