@@ -77,7 +77,12 @@ def select_hero(request):
 
 
 def load_game(request):
-    print(request.config.__dict__)
-    argv = [request.config.current_project_path + '../apmn-game/ApaimaneeMOBA']
+    argv = [request.config.current_project_path + '/../apmn-game/ApaimaneeMOBA',
+            '--client_id', request.apmn_client.client_id,
+            '--room_id', request.apmn_client.room.current_room['room_id'],
+            '--token', request.apmn_client.user.loggedin_info['token'],
+            '--host', request.apmn_client._host,
+            '--port', str(request.apmn_client._port),
+            '--log', request.config.current_project_path + '/../apmn-game/logging.conf']
     game_process = subprocess.Popen(argv)
     return dict()

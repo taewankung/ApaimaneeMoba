@@ -22,19 +22,24 @@ def initial_game():
     parser.add_argument('--room_id', nargs='?', const='test_room_id',
                         default='test_room_id',
                         help='ApamneeMOBA room_id')
+    parser.add_argument('--token', nargs='?', const='test_token',
+                        default='test_token',
+                        help='ApamneeMOBA token')
     parser.add_argument('--host', nargs='?', const='localhost',
                         default='localhost',
                         help='ApamneeMOBA API host')
     parser.add_argument('--port', nargs='?', const=1883,
                         default=1883,
                         help='ApamneeMOBA API port')
-
+    parser.add_argument('--log', nargs='?', const='logging.conf',
+                        default='logging.conf',
+                        help='ApamneeMOBA API logging')
 
 
 
     args = parser.parse_args()
 
-    logging.config.fileConfig('logging.conf')
+    logging.config.fileConfig(args.log)
     logger = logging.getLogger('apmn')
 
     logger.info('Apaimanee Game start')
@@ -42,18 +47,14 @@ def initial_game():
 
 
     ac = ApaimaneeMOBAClient(args.client_id,
-                             args.host, args.port,
+                             args.host, int(args.port),
                              args.room_id)
 
     ac.connect()
     gc = ac.game_client
-    
-    # remove if release
-    if args.client_id == 'test_client_id' and args.room_id == 'test_room_id':
-        gc.user.loggedin_info = dict(token='test_token')
-        gc.room.current_room = dict(room_id=args.room_id)
-    
-    
+    gc.user.loggedin_info = dict(token=args.token)
+    gc.room.current_room = dict(room_id=args.room_id)
+
     gc.game.ready()
     logger.info('Apaimanee Game load ready')
 
@@ -84,11 +85,12 @@ def loading_scene():
 
 
     else:
-        
         try:
             initial_game()
         except Exception as e:
+            logger = logging.getLogger('apmn')
             print('Initial Fail:', e)
+            logger.exception(e)
             game_out_actualtor = cont.actuators['GameOut']
             cont.activate(game_out_actualtor)
 
