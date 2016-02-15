@@ -10,9 +10,10 @@ body{
 }
 #box_left {
     float:left;
+    position: relative;
+    top:400;
     width:650px;
     height:450px;
-    border:solid 1px white;
     margin-right: 700px;
 }
 
@@ -20,8 +21,8 @@ body{
     float:right;
     width:10px;
     height:10px;
-    border:solid 1px white;
     text-align:center;
+    margin-left: 700px;
 }
 #login{
 	width: auto;
@@ -111,7 +112,6 @@ padding: 5px 10px 5px 10px;
 color: #fff;
 
 font-weight: bold;
-
 -moz-border-radius: 6px;
 
 -webkit-border-radius: 6px;
@@ -175,11 +175,11 @@ th, td {
     padding: 8px;
 }
 
-tr:nth-child(even){background-color: #f2f2f2}
+tr:nth-child(even){background-color: black}
 
 th {
     background-color: #4CAF50;
-    color: white;
+    color: black;
 }
 
 
@@ -190,19 +190,19 @@ th {
 	width:100%;
 	box-shadow: 10px 10px 5px #888888;
 	border:1px solid #161010;
-	
+
 	-moz-border-radius-bottomleft:0px;
 	-webkit-border-bottom-left-radius:0px;
 	border-bottom-left-radius:0px;
-	
+
 	-moz-border-radius-bottomright:0px;
 	-webkit-border-bottom-right-radius:0px;
 	border-bottom-right-radius:0px;
-	
+
 	-moz-border-radius-topright:0px;
 	-webkit-border-top-right-radius:0px;
 	border-top-right-radius:0px;
-	
+
 	-moz-border-radius-topleft:0px;
 	-webkit-border-top-left-radius:0px;
 	border-top-left-radius:0px;
@@ -231,13 +231,11 @@ th {
 	-webkit-border-bottom-left-radius:0px;
 	border-bottom-left-radius:0px;
 }.CSSTableGenerator tr:hover td{
-	
+
 }
 .CSSTableGenerator tr:nth-child(odd){ background-color:#ffaa56; }
-.CSSTableGenerator tr:nth-child(even)    { background-color:#ffffff; }.CSSTableGenerator td{
+.CSSTableGenerator tr:nth-child(even)    { background-color:#ffaa56; }.CSSTableGenerator td{
 	vertical-align:middle;
-	
-	
 	border:1px solid #161010;
 	border-width:0px 1px 1px 0px;
 	text-align:left;
@@ -265,7 +263,7 @@ th {
 	font-size:14px;
 	font-family:Arial;
 	font-weight:bold;
-	color:#ffffff;
+	color:black;
 }
 .CSSTableGenerator tr:first-child:hover td{
 	background:-o-linear-gradient(bottom, #7f3f00 5%, #0a0a06 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #7f3f00), color-stop(1, #0a0a06) );
