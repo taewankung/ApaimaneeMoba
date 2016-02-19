@@ -8,9 +8,7 @@ class Tower(Building):
                  owner,
                  spawn_bullet=""
                  ):
-        
         super().__init__(owner)
-        
         self.spawn_bullet = spawn_bullet
 
     def destroyed(self):

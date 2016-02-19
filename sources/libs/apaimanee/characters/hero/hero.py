@@ -1,12 +1,13 @@
 from bge import logic
 from bge import types
+import bge
 import math
 
 from libs.apaimanee.characters.game_object import GameObject
 
 #max_exp = [200, 300, 400, 500, 600, 700, 800, 900,
 #           1000, 1100, 1200, 1300, 1400, 1500, 1600,
-#           1700, 1800] 
+#           1700, 1800]
 
 class Hero(GameObject):
     
@@ -17,7 +18,7 @@ class Hero(GameObject):
                  bone_action='',
                  ):
        
-        super().__init__(owner) 
+        super().__init__(owner)
         self.mouse = self.controller.sensors["Mouse"]
         self.track = self.controller.actuators["TrackTarget"]
         self.click = self.controller.sensors["ClickR"]
@@ -57,7 +58,7 @@ class Hero(GameObject):
                     self["states"] = "move"
                 self.controller.activate(self.move)
                 
-        if self.collision.positive: 
+        if self.collision.positive:
             if self["states"] == "move":
                 self.controller.deactivate(self.move)
                 self["states"] = "stand_by"
@@ -72,7 +73,7 @@ class Hero(GameObject):
                                             speed = 1)
 
             
-    def attack(self, target,start_frame,end_frame,attack_speed): 
+    def attack(self, target,start_frame,end_frame,attack_speed):
         hitPosition = self.mouse.hitPosition
         hit_object = self.mouse.hitObject
         default_target = target
@@ -84,8 +85,9 @@ class Hero(GameObject):
             default_target.worldPosition.y = hitPosition.y
             default_target.worldPosition.x = hitPosition.x
             self.controller.activate(self.track)
-            target["States"] =str(hit_object)
-            target["IdObjClicked"] =hit_object.id
+            if not type(hit_object) is bge.types.KX_GameObject:
+                target["States"] =str(hit_object)
+                target["IdObjClicked"] =hit_object.id
 
         if self.enemy_col.positive and self["states"] != "attack":
             self.controller.deactivate(self.move)
