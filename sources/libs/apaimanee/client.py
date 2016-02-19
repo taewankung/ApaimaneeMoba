@@ -21,7 +21,7 @@ class ApaimaneeMOBAClient(metaclass=Singleton):
         self._port = port
         self._room_id = room_id
         self.game_client = None
-        self.game_logic = GameLogic()
+        self.game_logic = GameLogic(self.game_client)
 
     def connect(self):
         if self.game_client is None:
@@ -31,6 +31,7 @@ class ApaimaneeMOBAClient(metaclass=Singleton):
             self.game_client.initial()
             self.game_client.gm.start_game(self._room_id)
             self.game_client.gm.register(self.game_logic)
+            self.game_logic.game_client = self.game_client
 
     def disconnect(self):
         self.game_client.disconnect()
