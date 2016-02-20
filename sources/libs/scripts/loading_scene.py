@@ -55,7 +55,7 @@ def initial_game():
     gc.user.loggedin_info = dict(token=args.token)
     gc.room.current_room = dict(room_id=args.room_id)
 
-    gc.game.ready()
+    gc.game.initial()
     logger.info('Apaimanee Game load ready')
 
 def loading_scene():
