@@ -10,14 +10,13 @@ from libs.apaimanee.characters.game_object import GameObject
 #           1700, 1800]
 
 class Hero(GameObject):
-    
+
     def __init__(self,
                  owner,
                  #click_point_obj,
                  bone_name='',
                  bone_action='',
                  ):
-       
         super().__init__(owner)
         self.mouse = self.controller.sensors["Mouse"]
         self.track = self.controller.actuators["TrackTarget"]
@@ -29,7 +28,7 @@ class Hero(GameObject):
         self.bone_action = bone_action
         self.curren_scene = logic.getCurrentScene()
         #self.click_poin_obj = click_point_obj
-    
+
     def getName(self):
         return self["unit_name"]
 
@@ -42,7 +41,7 @@ class Hero(GameObject):
 
     def regend_mana(self):
         pass
-    
+
     def move_unit(self, target,start_frame,end_frame,move_speed):
         hitPosition = self.mouse.hitPosition
         hit_object = self.mouse.hitObject
@@ -57,7 +56,7 @@ class Hero(GameObject):
                 if self["states"]!='move':
                     self["states"] = "move"
                 self.controller.activate(self.move)
-                
+
         if self.collision.positive:
             if self["states"] == "move":
                 self.controller.deactivate(self.move)
@@ -72,7 +71,7 @@ class Hero(GameObject):
                                             play_mode = logic.KX_ACTION_MODE_PLAY,
                                             speed = 1)
 
-            
+
     def attack(self, target,start_frame,end_frame,attack_speed):
         hitPosition = self.mouse.hitPosition
         hit_object = self.mouse.hitObject
@@ -118,16 +117,32 @@ class Hero(GameObject):
     def die(self):
         self["alive"] = False
 
-    def skill_action(self,start_frame,end_frame):
-        for bone in self.children:
-            if bone.name == self.bone_name:
-                bone.playAction(self.bone_action,
-                                start_frame,
-                                end_frame,
-                                play_mode = logic.KX_ACTION_MODE_PLAY,
-                                speed = 1
-                                )
-         
+    def skill_action(self, start_frame, end_frame, sound_skill = None, obj_effect_name = None):
+        have_sound = False
+        if sound_skill :
+            have_sound = True
+        if obj_effect_name:
+            effect_obj = self.current_scene.objectsInjected[obj_effect_name]
+        self.children[self.bone_name].playAction(self.bone_action,
+                                                start_frame,
+                                                end_frame,
+                                                play_mode = logic.KX_ACTION_MODE_PLAY,
+                                                speed = 1
+                                                )
+        if math.fabs(self.children[self.bone_name].getActionFrame()-end_frame)< 99e-2:
+            self.children[self.bone_name].stopAction()
+            if have_sound :
+                self.sound(sound_skill,"play")
+                #   if have_sound:
+                #        self.sound(sound_skill,"stop")
+
+    def sound(self,sound_actuator_name,mode):
+        sound = self.controller.actuators[sound_actuator_name]
+        if mode == 'play' :
+            self.controller.activate(sound)
+        elif mode == 'stop':
+            self.controller.deactivate(sound)
+
     def get_when_die(self, kda):
         gift=[]
         self["gold"] = kda * 500

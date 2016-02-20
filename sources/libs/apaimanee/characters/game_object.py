@@ -5,8 +5,8 @@ class GameObject(bge.types.KX_GameObject):
     def __init__(self, owner):
         self.id = str(uuid.uuid4())
         self.controller = bge.logic.getCurrentController()
+        self.hp = 200
 
-       
     def reduce_hp(self, damaged):
         self["hp"] = damaged*((100-self["armor"])/100)
 
@@ -16,6 +16,7 @@ class GameObject(bge.types.KX_GameObject):
     def die(self):
         self["alive"] = False
 
+
     def get_alive(self):
         self["alive"] = True
     #///////////////////// Interface ////////////////////////
@@ -24,7 +25,7 @@ class GameObject(bge.types.KX_GameObject):
     #//////////////////// Interface /////////////////////////
     def attack(self):
         pass
-    
+
     def get_owner(self):
         return self
 
@@ -36,13 +37,12 @@ class GameObject(bge.types.KX_GameObject):
            print("alive status: Die")
         else:
            print("alive status: Alive")
-    
+
     def damaged(self):
         scene = bge.logic.getCurrentScene()
         obj = None
         if self.controller.sensors["Message"].positive and self.controller.sensors["IdMessage"].positive:
             enemy = self.controller.sensors["Message"].bodies[0]
-            #print(enemy)#enemy attack
             id_message_sensor_body = self.controller.sensors["IdMessage"].bodies[0]
             if id_message_sensor_body == self.id:
                 if enemy in scene.objects:
@@ -52,3 +52,8 @@ class GameObject(bge.types.KX_GameObject):
                     if "hp" in self and "hp" in obj_enemy_in_scene:
                         if self["hp"] > 0:
                             self["hp"] = self["hp"]-float(obj_enemy_in_scene["dmg"])
+                            self.hp = self.hp - float(obj_enemy_in_scene["dmg"])
+                            print(self.hp)
+                        else:
+                            self.die()
+
